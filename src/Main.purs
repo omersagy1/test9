@@ -27,7 +27,6 @@ manualEntryPoint = void $ unsafePartial do
 
 halogenLoop :: Effect Unit
 halogenLoop = HA.runHalogenAff do
-  awaitLoad
-  halogenDiv <- selectElement (QuerySelector "#halogen")
   body <- HA.awaitBody
+  halogenDiv <- selectElement (QuerySelector "#halogen")
   runUI B.component unit (Maybe.fromMaybe body halogenDiv)
