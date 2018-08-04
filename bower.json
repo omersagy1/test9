@@ -16,7 +16,8 @@
   "devDependencies": {
     "purescript-psci-support": "^4.0.0",
     "purescript-ordered-collections": "^1.0.0",
-    "purescript-canvas": "^4.0.0"
+    "purescript-canvas": "^4.0.0",
+    "purescript-halogen": "^4.0.0"
   },
   "homepage": "https://github.com/omersagy1/test9",
   "authors": [
