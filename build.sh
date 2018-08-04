@@ -1,0 +1,1 @@
+pulp build --to dist/index.js

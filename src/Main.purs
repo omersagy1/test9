@@ -1,11 +1,10 @@
 module Main where
 
-import Data.List
+import Control.Applicative (pure)
 import Data.Map (Map)
 import Data.Map as Map
 import Effect (Effect)
-import Effect.Console (log)
-import Prelude (Unit)
+import Prelude (Unit, unit)
 
 
 class Named a where
@@ -40,8 +39,7 @@ data Thing = A1
              | A3 { a :: Int, b :: String }
 
 main :: Effect Unit
-main = do
-  log "Hello sailor!"
+main = do pure unit
 
 something :: Int
 something = 5
