@@ -1,16 +1,15 @@
 module Main where
 
-import Prelude (bind, Unit, unit)
+import Data.Maybe
 
-import Control.Applicative (pure)
 import Data.Function (($))
 import Data.Functor (void)
-import Data.Maybe
 import Data.Map (Map)
 import Data.Map as Map
 import Effect (Effect)
-import Graphics.Canvas (getCanvasElementById, getContext2D)
+import Graphics.Canvas
 import Partial.Unsafe (unsafePartial)
+import Prelude (bind, Unit)
 
 
 class Named a where
@@ -48,7 +47,8 @@ main :: Effect Unit
 main = void $ unsafePartial do 
   Just canvas <- getCanvasElementById "canvas"
   ctx <- getContext2D canvas
-  pure unit
+  _ <- setFillStyle ctx "#0000FF"
+  fillRect ctx { x: 0.0 , y: 0.0 , width: 100.0 , height: 100.0 }
 
 something :: Int
 something = 5

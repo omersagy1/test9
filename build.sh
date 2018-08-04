@@ -1,1 +1,1 @@
-pulp build --to dist/index.js
+pulp build --to dist/purs_app.js
