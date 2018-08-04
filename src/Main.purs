@@ -1,6 +1,5 @@
 module Main where
 
-import Control.Applicative (pure)
 import Data.Function (($))
 import Data.Functor (void)
 import Data.Maybe (Maybe(..))
