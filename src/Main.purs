@@ -1,10 +1,16 @@
 module Main where
 
+import Prelude (bind, Unit, unit)
+
 import Control.Applicative (pure)
+import Data.Function (($))
+import Data.Functor (void)
+import Data.Maybe
 import Data.Map (Map)
 import Data.Map as Map
 import Effect (Effect)
-import Prelude (Unit, unit)
+import Graphics.Canvas (getCanvasElementById, getContext2D)
+import Partial.Unsafe (unsafePartial)
 
 
 class Named a where
@@ -39,7 +45,10 @@ data Thing = A1
              | A3 { a :: Int, b :: String }
 
 main :: Effect Unit
-main = do pure unit
+main = void $ unsafePartial do 
+  Just canvas <- getCanvasElementById "canvas"
+  ctx <- getContext2D canvas
+  pure unit
 
 something :: Int
 something = 5
