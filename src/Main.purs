@@ -1,11 +1,11 @@
 module Main where
 
-import Data.Maybe
 
 import Data.Function (($))
 import Data.Functor (void)
 import Data.Map (Map)
 import Data.Map as Map
+import Data.Maybe
 import Effect (Effect)
 import Graphics.Canvas
 import Partial.Unsafe (unsafePartial)

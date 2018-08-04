@@ -1,4 +1,8 @@
+#canvas-frame {
+  padding: 50px;
+  border: solid;
+}
+
 #canvas {
-  height: 100%;
-  width: 100%;
+  border : solid;
 }
