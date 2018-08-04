@@ -1,17 +1,18 @@
 module Main where
 
+import Button as B
 import Data.Function (($))
 import Data.Functor (void)
 import Data.Maybe (Maybe(..))
+import Data.Maybe as Maybe
 import Effect (Effect)
 import Graphics.Canvas (fillRect, getCanvasElementById, getContext2D, setFillStyle)
-import Partial.Unsafe (unsafePartial)
-import Prelude (bind, Unit, unit, discard)
-
+import Halogen.Aff (awaitLoad, selectElement)
 import Halogen.Aff as HA
 import Halogen.VDom.Driver (runUI)
-
-import Button as B
+import Partial.Unsafe (unsafePartial)
+import Prelude (bind, Unit, unit, discard)
+import Web.DOM.ParentNode (QuerySelector(..))
 
 
 manualEntryPoint :: Effect Unit
@@ -26,5 +27,7 @@ manualEntryPoint = void $ unsafePartial do
 
 halogenLoop :: Effect Unit
 halogenLoop = HA.runHalogenAff do
+  awaitLoad
+  halogenDiv <- selectElement (QuerySelector "#halogen")
   body <- HA.awaitBody
-  runUI B.component unit body
+  runUI B.component unit (Maybe.fromMaybe body halogenDiv)
