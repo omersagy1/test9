@@ -1,5 +1,6 @@
 module Main where
 
+import Control.Applicative (pure)
 import Data.Function (($))
 import Data.Functor (void)
 import Data.Maybe (Maybe(..))
@@ -14,15 +15,17 @@ import Halogen.VDom.Driver (runUI)
 import Button as B
 
 
-main :: Effect Unit
-main = void $ unsafePartial do 
+manualEntryPoint :: Effect Unit
+manualEntryPoint = void $ unsafePartial do 
   Just canvas <- getCanvasElementById "canvas"
   ctx <- getContext2D canvas
   _ <- setFillStyle ctx "#0000FF"
   fillRect ctx { x: 0.0 , y: 0.0 , width: 100.0 , height: 100.0 }
-  hal
+  halogenLoop
+  fillRect ctx { x: 100.0 , y: 0.0 , width: 100.0 , height: 100.0 }
 
-hal :: Effect Unit
-hal = HA.runHalogenAff do
+
+halogenLoop :: Effect Unit
+halogenLoop = HA.runHalogenAff do
   body <- HA.awaitBody
   runUI B.component unit body

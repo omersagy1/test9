@@ -1,1 +1,1 @@
-pulp build --to dist/purs_app.js
+pulp build --to dist/purs_app.js --skip-entry-point
