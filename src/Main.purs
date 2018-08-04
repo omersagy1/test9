@@ -2,9 +2,9 @@ module Main where
 
 import Data.Function (($))
 import Data.Functor (void)
-import Data.Maybe
+import Data.Maybe (Maybe(..))
 import Effect (Effect)
-import Graphics.Canvas
+import Graphics.Canvas (fillRect, getCanvasElementById, getContext2D, setFillStyle)
 import Partial.Unsafe (unsafePartial)
 import Prelude (bind, Unit)
 
