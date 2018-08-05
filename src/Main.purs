@@ -15,7 +15,7 @@ import Prelude (bind, Unit, unit, discard)
 import Web.DOM.ParentNode (QuerySelector(..))
 
 
-manualEntryPoint :: Effect Unit
+manualEntryPoint ∷ Effect Unit
 manualEntryPoint = void $ unsafePartial do 
   Just canvas ← getCanvasElementById "canvas"
   ctx ← getContext2D canvas
@@ -25,7 +25,7 @@ manualEntryPoint = void $ unsafePartial do
   fillRect ctx { x: 100.0 , y: 0.0 , width: 100.0 , height: 100.0 }
 
 
-halogenLoop :: Effect Unit
+halogenLoop ∷ Effect Unit
 halogenLoop = HA.runHalogenAff do
   body ← HA.awaitBody
   halogenDiv ← selectElement (QuerySelector "#halogen")

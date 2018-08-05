@@ -10,9 +10,9 @@ import Halogen.HTML.Events as HE
 
 data Query a = ToggleState a
 
-type State = { on :: Boolean }
+type State = { on ∷ Boolean }
 
-component :: ∀ m. H.Component HH.HTML Query Unit Void m
+component ∷ ∀ m. H.Component HH.HTML Query Unit Void m
 component =
   H.component
     { initialState: const initialState
@@ -22,10 +22,10 @@ component =
     }
   where
 
-  initialState :: State
+  initialState ∷ State
   initialState = { on: false }
 
-  render :: State → H.ComponentHTML Query
+  render ∷ State → H.ComponentHTML Query
   render state =
     HH.div_
       [ HH.h1_
@@ -41,7 +41,7 @@ component =
           ]
       ]
 
-  eval :: Query ~> H.ComponentDSL State Query Void m
+  eval ∷ Query ~> H.ComponentDSL State Query Void m
   eval = case _ of
     ToggleState next → do
       _ ← H.modify (\state → { on: not state.on })
