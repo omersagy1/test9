@@ -1,23 +1,29 @@
-module Data.Story where
+module Data.Builder where
 
 import Prelude
 
-data Story = Story (Array String)
+import Game.Types.Story
+import Game.Types.StoryEvent
+import Game.Types.TopLevelEvent
 
-instance semigroupStory ∷ Semigroup Story where
-  append ∷ Story → Story → Story
-  append (Story s1) (Story s2) = (Story (s1 <> s2))
 
-instance showStory ∷ Show Story where
-  show ∷ Story → String
-  show (Story s) = "Story: " <> (show s)
+data Construct = S Story
+                 | TL TopLevelEvent
+                 | E StoryEvent
 
-instance monoidStory ∷ Monoid Story where
+instance semigroupConstruct ∷ Semigroup Construct where
+  append ∷ Construct → Construct → Construct
+  append (S s1) (S s2) = S (s1 <> s2)
+  append (TL t1) (TL t2) = TL (t1 <> t2)
+  append (E e1) (E e2) = E (e1 <> e2)
+  append x y = x
+
+instance monoidConstruct ∷ Monoid Construct where
   mempty ∷ Story
   mempty = Story []
 
 
-data Builder a = Builder a Story
+data Builder a = Builder a Construct
 
 instance bShow ∷ Show a ⇒ Show (Builder a) where
   show ∷ Builder a → String
@@ -44,15 +50,3 @@ instance sBind ∷ Bind Builder where
       (Builder d2 (s1 <> s2))
     
 instance sMonad ∷ Monad Builder
-
-
-dummy ∷ Builder Unit
-dummy = pure unit
-
-addLine ∷ String → Builder Unit
-addLine l = Builder unit (Story [l])
-
-q ∷ Builder Unit
-q = do
-  addLine "hello"
-  addLine "world!"
