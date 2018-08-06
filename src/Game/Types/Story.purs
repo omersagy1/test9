@@ -2,8 +2,6 @@ module Data.Story where
 
 import Prelude
 
-import Data.Scenario
-
 
 data Story = Story (Array String)
 
@@ -18,15 +16,3 @@ instance showStory ∷ Show Story where
 instance monoidStory ∷ Monoid Story where
   mempty ∷ Story
   mempty = Story []
-
-
--- dummy ∷ Builder Unit
--- dummy = pure unit
--- 
--- addLine ∷ String → Builder Unit
--- addLine l = Builder unit (Story [l])
--- 
--- q ∷ Builder Unit
--- q = do
---   addLine "hello"
---   addLine "world!"

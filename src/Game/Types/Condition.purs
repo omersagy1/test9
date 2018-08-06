@@ -1,8 +1,7 @@
 module Game.Types.Condition where
 
-import Prelude
 
-import Game.Types.ActionName
+import Game.Types.ActionName (Name)
 
 
 data Condition = Pure PureCondition
