@@ -2,14 +2,7 @@ module Data.Story where
 
 import Prelude
 
--- class Construct a where
---   init ∷ a
-
 data Story = Story (Array String)
-
---instance storyConstruct ∷ Construct Story where
---  init ∷ Story
---  init = Story []
 
 instance semigroupStory ∷ Semigroup Story where
   append ∷ Story → Story → Story
@@ -22,7 +15,6 @@ instance showStory ∷ Show Story where
 instance monoidStory ∷ Monoid Story where
   mempty ∷ Story
   mempty = Story []
-
 
 
 data Builder a = Builder a Story
