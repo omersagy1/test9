@@ -9,8 +9,7 @@ class Named a where
 
 type NameMap a = Map String a
 
-init ∷ ∀ a. Named a ⇒ 
-        NameMap a
+init ∷ ∀ a. Named a ⇒ NameMap a
 init = Map.empty
 
 insert ∷ ∀ a. Named a ⇒ a → NameMap a → NameMap a
