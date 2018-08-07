@@ -1,9 +1,7 @@
 module Game.Types.Effect where
 
-import Data.List
-import Prelude
 
-import Game.Types.ActionName
+import Game.Types.ActionName (Name)
 
 
 data Effect = NoEffect
@@ -18,5 +16,5 @@ data Effect = NoEffect
               | DeactivateAction Name
               | StokeFireEff
               | GameOver
-              | Compound (List Effect)
+              | Compound (Array Effect)
               | Compound2 Effect Effect

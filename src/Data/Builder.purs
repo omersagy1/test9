@@ -1,15 +1,17 @@
 module Data.Builder where
 
-import Prelude
+import Prelude (class Applicative, class Apply, class Bind, class Functor, class Monad, class Monoid, class Semigroup, class Show, mempty, show, (<>))
 
-import Game.Types.Story
-import Game.Types.StoryEvent
-import Game.Types.TopLevelEvent
+import Game.Types.Story (Story(..))
 
 
 data Construct = S Story
                  -- | TL TopLevelEvent
                  -- | E StoryEvent
+
+getStory ∷ Construct → Story 
+getStory (S s) = s
+
 
 instance semigroupConstruct ∷ Semigroup Construct where
   append ∷ Construct → Construct → Construct
@@ -29,9 +31,13 @@ instance showConstruct ∷ Show Construct where
 
 data Builder a = Builder a Construct
 
+getConstruct ∷ ∀ a. Builder a → Construct
+getConstruct (Builder dum c) = c
+
+
 instance bShow ∷ Show a ⇒ Show (Builder a) where
   show ∷ Builder a → String
-  show (Builder dum s) = "Builder: " <> (show s)
+  show (Builder dum s) = "Builder: \n" <> (show s)
 
 instance bFunctor ∷ Functor Builder where
   map ∷ ∀ a b. (a → b) → Builder a → Builder b

@@ -16,7 +16,7 @@ data TopLevelEvent = TopLevel
 
 instance showTopLevelEvent ∷ Show TopLevelEvent where
   show ∷ TopLevelEvent → String
-  show (TopLevel e) = (show e.name) <> "\n" <> (show e.event)
+  show (TopLevel e) = (show e.name) <> " " <> (show e.event)
 
 
 new ∷ String → StoryEvent → TopLevelEvent

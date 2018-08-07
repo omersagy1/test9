@@ -38,7 +38,7 @@ data AtomicEvent =
 
 instance showStoryEvent ∷ Show StoryEvent where
   show ∷ StoryEvent → String
-  show e = "StoryEvent Object"
+  show e = "StoryEventObject"
 
 
 data Choice = Choice
