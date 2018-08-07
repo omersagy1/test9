@@ -40,12 +40,12 @@ instance showStoryEvent ∷ Show StoryEvent where
   show ∷ StoryEvent → String
   show e = "StoryEventObject"
 
-instance semigroupStoryEvent :: Semigroup StoryEvent where
-  append :: StoryEvent -> StoryEvent -> StoryEvent
+instance semigroupStoryEvent ∷ Semigroup StoryEvent where
+  append ∷ StoryEvent → StoryEvent → StoryEvent
   append s1 s2 =
     case s1 of
-      Sequenced events -> Sequenced (snoc events s2)
-      other -> Sequenced (snoc (singleton s1) s2)
+      Sequenced events → Sequenced (snoc events s2)
+      other → Sequenced (snoc (singleton s1) s2)
 
 
 

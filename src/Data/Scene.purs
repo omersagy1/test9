@@ -1,26 +1,38 @@
 module Data.Scene where
 
-import Prelude (Unit, discard, unit, ($))
 
 import Common.Annex
-import Data.Builder (Builder(..), Construct(..), getStory, getConstruct)
+import Data.Builder (Builder(..), Construct(..), getStory, getEvent, getConstruct)
 import Game.Types.Story (Story(..))
+import Game.Types.StoryEvent (AtomicEvent(..), StoryEvent(..))
 import Game.Types.TopLevelEvent (TopLevelEvent)
 import Game.Types.TopLevelEvent as TopLevelEvent
-import Game.Types.StoryEvent (AtomicEvent(..), StoryEvent(..))
+import Prelude (Unit, discard, unit, ($), (<<<))
 
 
-ev ∷ String → Builder Unit
-ev name = Builder unit (S (Story [TopLevelEvent.new name (Atomic StartInteraction)]))
+top ∷ String → Builder Unit
+top name = Builder unit (S (Story [TopLevelEvent.new name (Atomic StartInteraction)]))
 
 fl ∷ TopLevelEvent → Builder Unit
 fl e = Builder unit (S (Story [e]))
 
+ln ∷ String → Builder Unit
+ln text = Builder unit (E (Atomic (Narration text)))
+
+body ∷ Builder Unit → StoryEvent
+body b = (getEvent <<< getConstruct) b
+
 story ∷ Story
 story = getStory $ getConstruct $ do
 
-  ev <| "first"
-  ev "second"
-  ev "third"
+  top <| "first"
+  top "second"
+  top "third"
   fl <| 
     TopLevelEvent.new "fourth" (Atomic StartInteraction)
+  fl <|
+    TopLevelEvent.new "fifth" (body $ do
+    ln "first line!"
+    ln "second line!"
+    ln "third line!")
+

@@ -13,6 +13,10 @@ getStory ∷ Construct → Story
 getStory (S s) = s
 getStory other = mempty
 
+getEvent ∷ Construct → StoryEvent
+getEvent (E e) = e
+getEvent other = Atomic EndInteraction
+
 
 instance semigroupConstruct ∷ Semigroup Construct where
   append ∷ Construct → Construct → Construct
