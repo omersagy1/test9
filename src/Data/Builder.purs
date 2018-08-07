@@ -1,10 +1,10 @@
 module Data.Builder where
 
-import Prelude (class Applicative, class Apply, class Bind, class Functor, class Monad, class Monoid, class Semigroup, class Show, mempty, show, (<>))
+import Prelude (class Applicative, class Apply, class Bind, class Functor, class Monad, class Show, show, (<>))
 
-import Data.Buildable
-import Game.Types.Story (Story(..))
-import Game.Types.StoryEvent
+import Data.Buildable (class Buildable, combine, default)
+import Game.Types.Story (Story)
+import Game.Types.StoryEvent (StoryEvent)
 
 
 data Construct = S Story
