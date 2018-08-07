@@ -34,5 +34,7 @@ story = getStory $ getConstruct $ do
     TopLevelEvent.new "fifth" (body $ do
     ln "first line!"
     ln "second line!"
-    ln "third line!")
+    ln "fourth line!"
+    ln "fifth line!"
+    ln "sixth line!")
 
