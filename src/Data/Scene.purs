@@ -1,6 +1,6 @@
 module Data.Scene where
 
-import Prelude (Unit, discard, unit)
+import Prelude (Unit, discard, unit, ($))
 
 import Data.Builder (Builder(..), Construct(..), getStory, getConstruct)
 import Game.Types.Story (Story(..))
@@ -13,7 +13,8 @@ ev name = Builder unit (S (Story [TopLevelEvent.new name (Atomic StartInteractio
 
 
 story ∷ Story
-story = getStory (getConstruct ( do
+story = getStory $ getConstruct $ do
+
   ev "first"
   ev "second"
-  ev "third"))
+  ev "third"
