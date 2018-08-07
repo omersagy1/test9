@@ -1,9 +1,10 @@
-module Data.TopLevelEvent where
+module Game.Types.TopLevelEvent where
 
 import Prelude
 
-import Game.Types.StoryEvent
-import Game.Types.Condition
+import Game.Types.StoryEvent (StoryEvent)
+import Game.Types.Condition (Condition)
+import Game.Types.Condition as Condition
 
 
 data TopLevelEvent = TopLevel 
@@ -11,4 +12,17 @@ data TopLevelEvent = TopLevel
   , reoccurring ∷ Boolean
   , trigger ∷ Condition
   , event ∷ StoryEvent
+  }
+
+instance showTopLevelEvent ∷ Show TopLevelEvent where
+  show ∷ TopLevelEvent → String
+  show (TopLevel e) = (show e.name) <> "\n" <> (show e.event)
+
+
+new ∷ String → StoryEvent → TopLevelEvent
+new name event = TopLevel
+  { name: name
+  , reoccurring: false
+  , trigger: Condition.Pure Condition.Never
+  , event: event
   }

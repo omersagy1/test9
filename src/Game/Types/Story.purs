@@ -1,9 +1,11 @@
-module Data.Story where
+module Game.Types.Story where
 
 import Prelude
 
+import Game.Types.TopLevelEvent (TopLevelEvent)
 
-data Story = Story (Array String)
+
+data Story = Story (Array TopLevelEvent)
 
 instance semigroupStory ∷ Semigroup Story where
   append ∷ Story → Story → Story

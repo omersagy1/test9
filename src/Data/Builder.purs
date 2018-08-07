@@ -8,19 +8,23 @@ import Game.Types.TopLevelEvent
 
 
 data Construct = S Story
-                 | TL TopLevelEvent
-                 | E StoryEvent
+                 -- | TL TopLevelEvent
+                 -- | E StoryEvent
 
 instance semigroupConstruct ∷ Semigroup Construct where
   append ∷ Construct → Construct → Construct
   append (S s1) (S s2) = S (s1 <> s2)
-  append (TL t1) (TL t2) = TL (t1 <> t2)
-  append (E e1) (E e2) = E (e1 <> e2)
-  append x y = x
+  -- append (TL t1) (TL t2) = TL (t1 <> t2)
+  -- append (E e1) (E e2) = E (e1 <> e2)
+  -- append x y = x
 
 instance monoidConstruct ∷ Monoid Construct where
-  mempty ∷ Story
-  mempty = Story []
+  mempty ∷ Construct
+  mempty = S (Story [])
+
+instance showConstruct ∷ Show Construct where
+  show ∷ Construct → String
+  show (S s) = (show s)
 
 
 data Builder a = Builder a Construct

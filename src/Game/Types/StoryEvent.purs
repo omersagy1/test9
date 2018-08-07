@@ -1,9 +1,9 @@
 module Game.Types.StoryEvent where
 
-import Data.List
-import Prelude
-import Game.Types.Condition
-import Game.Types.Effect
+import Data.List (List)
+import Prelude (class Show)
+import Game.Types.Condition (Condition)
+import Game.Types.Effect (Effect)
 
 
 data StoryEvent = 
@@ -34,6 +34,11 @@ data AtomicEvent =
   | Goto String
   -- Executes some kind of state-mutating effect on the game.
   | Effectful Effect
+
+
+instance showStoryEvent ∷ Show StoryEvent where
+  show ∷ StoryEvent → String
+  show e = "StoryEvent Object"
 
 
 data Choice = Choice
