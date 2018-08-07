@@ -3,22 +3,22 @@ module Data.Builder where
 import Prelude (class Applicative, class Apply, class Bind, class Functor, class Monad, class Monoid, class Semigroup, class Show, mempty, show, (<>))
 
 import Game.Types.Story (Story(..))
+import Game.Types.StoryEvent
 
 
 data Construct = S Story
-                 -- | TL TopLevelEvent
-                 -- | E StoryEvent
+                 | E StoryEvent
 
 getStory ∷ Construct → Story 
 getStory (S s) = s
+getStory other = mempty
 
 
 instance semigroupConstruct ∷ Semigroup Construct where
   append ∷ Construct → Construct → Construct
   append (S s1) (S s2) = S (s1 <> s2)
-  -- append (TL t1) (TL t2) = TL (t1 <> t2)
-  -- append (E e1) (E e2) = E (e1 <> e2)
-  -- append x y = x
+  append (E e1) (E e2) = E (e1 <> e2)
+  append x y = x
 
 instance monoidConstruct ∷ Monoid Construct where
   mempty ∷ Construct
@@ -27,6 +27,7 @@ instance monoidConstruct ∷ Monoid Construct where
 instance showConstruct ∷ Show Construct where
   show ∷ Construct → String
   show (S s) = (show s)
+  show (E e) = (show e)
 
 
 data Builder a = Builder a Construct

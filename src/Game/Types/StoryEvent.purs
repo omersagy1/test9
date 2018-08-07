@@ -1,9 +1,9 @@
 module Game.Types.StoryEvent where
 
-import Data.List (List)
-import Prelude (class Show)
+import Data.List (List, snoc, singleton)
 import Game.Types.Condition (Condition)
 import Game.Types.Effect (Effect)
+import Prelude (class Semigroup, class Show)
 
 
 data StoryEvent = 
@@ -39,6 +39,14 @@ data AtomicEvent =
 instance showStoryEvent ∷ Show StoryEvent where
   show ∷ StoryEvent → String
   show e = "StoryEventObject"
+
+instance semigroupStoryEvent :: Semigroup StoryEvent where
+  append :: StoryEvent -> StoryEvent -> StoryEvent
+  append s1 s2 =
+    case s1 of
+      Sequenced events -> Sequenced (snoc events s2)
+      other -> Sequenced (snoc (singleton s1) s2)
+
 
 
 data Choice = Choice
