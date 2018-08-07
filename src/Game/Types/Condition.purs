@@ -1,5 +1,6 @@
 module Game.Types.Condition where
 
+import Data.Time (Time)
 
 import Game.Types.ActionName (Name)
 
@@ -10,7 +11,7 @@ data Condition = Pure PureCondition
                  | Or Condition Condition
                  | Not Condition
 
-data PureCondition = GameTimePassed Number -- TODO: Time
+data PureCondition = GameTimePassed Time
                      | Never
                      | Always
                      | ResourceAmountAbove String Int 
@@ -19,6 +20,6 @@ data PureCondition = GameTimePassed Number -- TODO: Time
                      | FireStoked
                      | ActionPerformed Name
                      | MilestoneReached String
-                     | TimeSinceMilestone String Number -- TODO: Time
+                     | TimeSinceMilestone String Time
                      | MilestoneAtCount String Int
                      | MilestoneGreaterThan String Int
