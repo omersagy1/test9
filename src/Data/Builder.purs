@@ -2,6 +2,7 @@ module Data.Builder where
 
 import Prelude (class Applicative, class Apply, class Bind, class Functor, class Monad, class Monoid, class Semigroup, class Show, mempty, show, (<>))
 
+import Data.Buildable
 import Game.Types.Story (Story(..))
 import Game.Types.StoryEvent
 
@@ -11,22 +12,22 @@ data Construct = S Story
 
 getStory ∷ Construct → Story 
 getStory (S s) = s
-getStory other = mempty
+getStory (E e) = default
 
 getEvent ∷ Construct → StoryEvent
 getEvent (E e) = e
-getEvent other = Atomic EndInteraction
+getEvent (S s) = default
 
 
-instance semigroupConstruct ∷ Semigroup Construct where
-  append ∷ Construct → Construct → Construct
-  append (S s1) (S s2) = S (s1 <> s2)
-  append (E e1) (E e2) = E (e1 <> e2)
-  append x y = x
+instance buildableConstruct ∷ Buildable Construct where
+  combine ∷ Construct → Construct → Construct
+  combine (S s1) (S s2) = S (combine s1 s2)
+  combine (E e1) (E e2) = E (combine e1 e2)
+  combine x y = x
 
-instance monoidConstruct ∷ Monoid Construct where
-  mempty ∷ Construct
-  mempty = S (Story [])
+  default ∷ Construct
+  default = S default
+
 
 instance showConstruct ∷ Show Construct where
   show ∷ Construct → String
@@ -50,11 +51,11 @@ instance bFunctor ∷ Functor Builder where
 
 instance bApply ∷ Apply Builder where
   apply ∷ ∀ a b. Builder (a → b) → Builder a → Builder b
-  apply (Builder f s1) (Builder dum s2) = (Builder (f dum) (s1 <> s2))
+  apply (Builder f s1) (Builder dum s2) = (Builder (f dum) (combine s1 s2))
 
 instance bApplicative ∷ Applicative Builder where
   pure ∷ ∀ a. a → Builder a
-  pure dum = Builder dum mempty
+  pure dum = Builder dum default
 
 instance sBind ∷ Bind Builder where
   bind ∷ ∀ a b. Builder a → (a → Builder b) → Builder b
@@ -62,6 +63,6 @@ instance sBind ∷ Bind Builder where
     let
       (Builder d2 s2) = fn d1
     in
-      (Builder d2 (s1 <> s2))
+      (Builder d2 (s1 `combine` s2))
     
 instance sMonad ∷ Monad Builder
