@@ -3,66 +3,34 @@ module Data.Builder where
 import Prelude (class Applicative, class Apply, class Bind, class Functor, class Monad, class Show, show, (<>))
 
 import Data.Buildable (class Buildable, combine, default)
-import Game.Types.Story (Story)
-import Game.Types.StoryEvent (StoryEvent)
 
 
-data Construct = S Story
-                 | E StoryEvent
+data Builder s a = BD s a
 
-getStory ∷ Construct → Story 
-getStory (S s) = s
-getStory (E e) = default
+getConstruct ∷ ∀ s a. Builder s a → s
+getConstruct (BD built dum) = built
 
-getEvent ∷ Construct → StoryEvent
-getEvent (E e) = e
-getEvent (S s) = default
+instance bShow ∷ (Show s, Show a) ⇒ Show (Builder s a) where
+  show ∷ Builder s a → String
+  show (BD s a) = "Builder: \n" <> (show s)
 
+instance bFunctor ∷ Buildable s ⇒ Functor (Builder s) where
+  map f (BD s dum) = BD s (f dum)
 
-instance buildableConstruct ∷ Buildable Construct where
-  combine ∷ Construct → Construct → Construct
-  combine (S s1) (S s2) = S (combine s1 s2)
-  combine (E e1) (E e2) = E (combine e1 e2)
-  combine x y = x
+instance bApply ∷ Buildable s ⇒ Apply (Builder s) where
+  apply ∷ ∀ a b. Builder s (a → b) → Builder s a → Builder s b
+  apply (BD s1 f) (BD s2 dum) = (BD (combine s1 s2) (f dum))
 
-  default ∷ Construct
-  default = S default
+instance bApplicative ∷ Buildable s ⇒ Applicative (Builder s) where
+  pure ∷ ∀ a. a → Builder s a
+  pure dum = BD default dum
 
-
-instance showConstruct ∷ Show Construct where
-  show ∷ Construct → String
-  show (S s) = (show s)
-  show (E e) = (show e)
-
-
-data Builder a = Builder a Construct
-
-getConstruct ∷ ∀ a. Builder a → Construct
-getConstruct (Builder dum c) = c
-
-
-instance bShow ∷ Show a ⇒ Show (Builder a) where
-  show ∷ Builder a → String
-  show (Builder dum s) = "Builder: \n" <> (show s)
-
-instance bFunctor ∷ Functor Builder where
-  map ∷ ∀ a b. (a → b) → Builder a → Builder b
-  map f (Builder dum s) = Builder (f dum) s
-
-instance bApply ∷ Apply Builder where
-  apply ∷ ∀ a b. Builder (a → b) → Builder a → Builder b
-  apply (Builder f s1) (Builder dum s2) = (Builder (f dum) (combine s1 s2))
-
-instance bApplicative ∷ Applicative Builder where
-  pure ∷ ∀ a. a → Builder a
-  pure dum = Builder dum default
-
-instance sBind ∷ Bind Builder where
-  bind ∷ ∀ a b. Builder a → (a → Builder b) → Builder b
-  bind (Builder d1 s1) fn = 
+instance sBind ∷ Buildable s ⇒ Bind (Builder s) where
+  bind ∷ ∀ a b. Builder s a → (a → Builder s b) → Builder s b
+  bind (BD s1 d1) fn = 
     let
-      (Builder d2 s2) = fn d1
+      (BD s2 d2) = fn d1
     in
-      (Builder d2 (s1 `combine` s2))
+      (BD (s1 `combine` s2) d2)
     
-instance sMonad ∷ Monad Builder
+instance sMonad ∷ Buildable s ⇒ Monad (Builder s)
