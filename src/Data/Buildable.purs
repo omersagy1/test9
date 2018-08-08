@@ -28,4 +28,5 @@ instance buildableStoryEvent ∷ Buildable StoryEvent where
       Sequenced events → Sequenced (Cons s1 events)
       other → Sequenced (snoc (singleton s1) s2)
 
+  -- TODO: create a more sensible default here.
   default = Atomic EndInteraction

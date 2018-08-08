@@ -1,38 +1,48 @@
 module Data.Scene where
 
+import Common.Annex ((<|), (|>))
+import Data.Buildable (class Buildable)
+import Game.Types.Condition (Condition(..), PureCondition(..))
 
-import Common.Annex
 import Data.Builder (Builder(..), getConstruct)
 import Game.Types.Story (Story(..))
 import Game.Types.StoryEvent (AtomicEvent(..), StoryEvent(..))
-import Game.Types.TopLevelEvent (TopLevelEvent)
+import Game.Types.TopLevelEvent (body, reoccurring, trigger)
 import Game.Types.TopLevelEvent as TopLevelEvent
-import Prelude (Unit, discard, unit, ($))
+import Prelude (Unit, identity, unit)
 
 
-top ∷ String → Builder Story Unit
-top name = BD (Story [TopLevelEvent.new name (Atomic StartInteraction)]) unit
+start ∷ ∀ s. Builder s Unit → s
+start = getConstruct
 
-fl ∷ TopLevelEvent → Builder Story Unit
-fl e = BD (Story [e]) unit
+build ∷ ∀ a. Buildable a ⇒ a → Builder a Unit
+build x = BD x unit
 
 ln ∷ String → Builder StoryEvent Unit
-ln text = BD (Atomic (Narration text)) unit
+ln text = build (Atomic (Narration text))
+
+restrict ∷ Builder StoryEvent Unit
+restrict = build (Atomic StartInteraction)
+
+never ∷ Condition
+never = Pure Never
+
+top ∷ String → Boolean → Condition → StoryEvent → Builder Story Unit
+top n r c e =
+  let 
+    tl = TopLevelEvent.new n
+               |> (if r then reoccurring else identity)
+               |> (trigger c)
+               |> (body e)
+  in
+    build (Story [tl])
 
 
 story ∷ Story
-story = getConstruct $ do
+story = start do
 
-  top <| "first"
-  top "second"
-  top "third"
-  fl <| 
-    TopLevelEvent.new "fourth" (Atomic StartInteraction)
-  fl <|
-    TopLevelEvent.new "fifth" (getConstruct $ do
+  top "second" 
+    false
+    never
+    <| start do
     ln "first line!"
-    ln "second line!"
-    ln "fourth line!"
-    ln "fifth line!"
-    ln "sixth line!")
-

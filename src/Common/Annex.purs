@@ -10,4 +10,4 @@ infixl 0 pipeForward as |>
 
 pipeBack ∷ ∀ a b. (a → b) → a → b
 pipeBack = ($)
-infixr 1 pipeBack as <|
+infixr 0 pipeBack as <|
