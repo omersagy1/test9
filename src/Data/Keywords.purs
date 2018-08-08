@@ -18,15 +18,8 @@ begin = getConstruct
 build ∷ ∀ a. Buildable a ⇒ a → Builder a Unit
 build x = BD x unit
 
-ln ∷ String → Builder StoryEvent Unit
-ln text = build (Atomic (Narration text))
 
-restrict ∷ Builder StoryEvent Unit
-restrict = build (Atomic StartInteraction)
-
-never ∷ Condition
-never = Pure Never
-
+-- TOP LEVEL EVENT HELPERS --
 reoccuring ∷ Boolean
 reoccuring = true
 
@@ -42,3 +35,22 @@ top n r c e =
                |> (body e)
   in
     build (Story [tl])
+
+-- STORY EVENT HELPERS --
+
+ln ∷ String → Builder StoryEvent Unit
+ln text = build (Atomic (Narration text))
+
+di ∷ String → Builder StoryEvent Unit
+di text = build (Atomic (Dialogue text))
+
+restrict ∷ Builder StoryEvent Unit
+restrict = build (Atomic StartInteraction)
+
+resume ∷ Builder StoryEvent Unit
+resume = build (Atomic EndInteraction)
+
+-- CONDITION HELPERS --
+
+never ∷ Condition
+never = Pure Never

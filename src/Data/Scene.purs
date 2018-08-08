@@ -17,3 +17,7 @@ story = begin do
     ln "Welcome to the game!"
     ln "Another line for us to play with!"
     ln "Keep it going!"
+    restrict
+    di "I am speaking directly now..."
+    resume
+    ln "Back to normal"

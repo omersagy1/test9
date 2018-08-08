@@ -41,9 +41,11 @@ instance showStoryEvent ∷ Show StoryEvent where
   show e =
     case e of
       Atomic StartInteraction → "start-interaction"
+      Atomic EndInteraction → "end-interaction"
       Atomic (Narration s) → "ln: " <> s
+      Atomic (Dialogue s) → "di: " <> s
       Sequenced es → (show es)
-      other → "invalid"
+      other → "unimplemented"
 
 
 data Choice = Choice
