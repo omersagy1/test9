@@ -9,11 +9,11 @@ import Game.Types.Story (Story(..))
 import Game.Types.StoryEvent (AtomicEvent(..), StoryEvent(..))
 import Game.Types.TopLevelEvent (body, reoccurring, trigger)
 import Game.Types.TopLevelEvent as TopLevelEvent
-import Prelude (Unit, identity, unit)
+import Prelude (Unit, identity, unit, discard)
 
 
-start ∷ ∀ s. Builder s Unit → s
-start = getConstruct
+begin ∷ ∀ s. Builder s Unit → s
+begin = getConstruct
 
 build ∷ ∀ a. Buildable a ⇒ a → Builder a Unit
 build x = BD x unit
@@ -27,6 +27,12 @@ restrict = build (Atomic StartInteraction)
 never ∷ Condition
 never = Pure Never
 
+reoccuring ∷ Boolean
+reoccuring = true
+
+onlyOnce ∷ Boolean
+onlyOnce = false
+
 top ∷ String → Boolean → Condition → StoryEvent → Builder Story Unit
 top n r c e =
   let 
@@ -37,12 +43,13 @@ top n r c e =
   in
     build (Story [tl])
 
-
 story ∷ Story
-story = start do
+story = begin do
 
   top "second" 
-    false
+    onlyOnce
     never
-    <| start do
-    ln "first line!"
+    <| begin do
+    ln "Welcome to the game!"
+    ln "Another line for us to play with!"
+    ln "Keep it going!"
