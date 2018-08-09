@@ -1,8 +1,8 @@
-module Data.Builder where
+module Script.Builder where
 
 import Prelude (class Applicative, class Apply, class Bind, class Functor, class Monad, class Show, show, (<>))
 
-import Data.Buildable (class Buildable, combine, default)
+import Script.Buildable (class Buildable, combine, default)
 
 
 data Builder s a = BD s a

@@ -3,16 +3,15 @@ module Data.Scene where
 import Prelude (discard)
 
 import Common.Annex ((<|))
-import Data.Keywords
 import Game.Types.Story (Story)
+import Script.Keywords
 
 
 story ∷ Story
 story = begin do
 
   top "second" 
-    onlyOnce
-    never
+    occursOnceWhen never
     <| begin do
     ln "Welcome to the game!"
     ln "Another line for us to play with!"
@@ -20,4 +19,7 @@ story = begin do
     restrict
     di "I am speaking directly now..."
     resume
+    cond unconditionally <| begin do
+      ln "always show this!"
+      ln "and this!"
     ln "Back to normal"

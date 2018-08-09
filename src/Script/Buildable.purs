@@ -1,7 +1,7 @@
-module Data.Buildable where
+module Script.Buildable where
 
-import Prelude ((<>), mempty)
-import Data.List (List(..), singleton, snoc)
+import Prelude ((<>), mempty, append)
+import Data.List (List(..), snoc, (:))
 
 import Game.Types.Story (Story)
 import Game.Types.StoryEvent (StoryEvent(..))
@@ -23,10 +23,10 @@ instance buildableStory ∷ Buildable Story where
 instance buildableStoryEvent ∷ Buildable StoryEvent where
 
   combine ∷ StoryEvent → StoryEvent → StoryEvent
-  combine s1 s2 =
-    case s2 of
-      Sequenced events → Sequenced (Cons s1 events)
-      other → Sequenced (snoc (singleton s1) s2)
+  combine (Sequenced events) (Sequenced more) = Sequenced (append events more)
+  combine (Sequenced events) e = Sequenced (snoc events e)
+  combine e (Sequenced events) = Sequenced (e : events)
+  combine e1 e2 = Sequenced (e1 : e2 : Nil)
 
   default ∷ StoryEvent
   default = Sequenced Nil

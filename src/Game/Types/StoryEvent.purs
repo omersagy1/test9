@@ -35,6 +35,11 @@ data AtomicEvent =
   -- Executes some kind of state-mutating effect on the game.
   | Effectful Effect
 
+data Choice = Choice
+  { condition ∷ Condition
+  , prompt ∷ String
+  , consq ∷ StoryEvent 
+  }
 
 instance showStoryEvent ∷ Show StoryEvent where
   show ∷ StoryEvent → String
@@ -44,12 +49,8 @@ instance showStoryEvent ∷ Show StoryEvent where
       Atomic EndInteraction → "end-interaction"
       Atomic (Narration s) → "ln: " <> s
       Atomic (Dialogue s) → "di: " <> s
+      Conditioned (ConditionedEvent c ce) → "conditioned: " <> (show ce)
       Sequenced es → (show es)
       other → "unimplemented"
 
 
-data Choice = Choice
-  { condition ∷ Condition
-  , prompt ∷ String
-  , consq ∷ StoryEvent 
-  }
