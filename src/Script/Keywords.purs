@@ -1,9 +1,12 @@
 module Script.Keywords where
 
-import Data.List
+
 
 import Common.Annex ((|>))
-import Data.Time (Time)
+import Data.Enum (class BoundedEnum, toEnum)
+import Data.List
+import Data.Maybe (fromJust)
+import Data.Time (Time(..), setSecond)
 import Game.Types.ActionName (Name(..))
 import Game.Types.Condition (Condition(..), PureCondition(..))
 import Game.Types.Effect (Effect)
@@ -11,6 +14,7 @@ import Game.Types.Story (Story(..))
 import Game.Types.StoryEvent (AtomicEvent(..), Choice(..), ConditionedEvent(..), StoryEvent(..))
 import Game.Types.TopLevelEvent (body, reoccurring, trigger)
 import Game.Types.TopLevelEvent as TopLevelEvent
+import Partial.Unsafe (unsafePartial)
 import Prelude (Unit, identity, unit, (>>>), ($))
 import Script.Buildable (class Buildable)
 import Script.Builder (Builder(..), getConstruct)
@@ -148,3 +152,14 @@ milestoneAtCount = (\m c → Pure (MilestoneAtCount m c))
 
 milestoneGreaterThan ∷ String → Int → Condition
 milestoneGreaterThan = (\m c → Pure (MilestoneGreaterThan m c))
+
+-- TIME HELPERS --
+
+comp ∷ ∀ a. BoundedEnum a ⇒ Int → a
+comp x = unsafePartial (fromJust (toEnum x))
+
+zeroTime ∷ Time
+zeroTime = Time (comp 0) (comp 0) (comp 0) (comp 0)
+
+seconds ∷ Int → Time
+seconds x = setSecond (comp x) zeroTime

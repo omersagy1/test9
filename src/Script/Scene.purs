@@ -1,10 +1,9 @@
 module Script.Scene where
 
-import Prelude (discard, ($))
-
 import Game.Types.Effect (Effect(..))
 import Game.Types.Story (Story)
-import Script.Keywords (add, rand, cases, when, (#), prompt, promptIf, begin, choices, cond, di, effect, ln, never, occursOnceWhen, restrict, resume, top, unconditionally)
+import Prelude (discard, ($))
+import Script.Keywords (gameTimePassed, seconds, add, rand, cases, when, (#), prompt, promptIf, begin, choices, cond, di, effect, ln, never, occursOnceWhen, restrict, resume, top, unconditionally)
 
 
 story ∷ Story
@@ -25,7 +24,7 @@ story = begin do
     effect $ AddToResource "wood" 1
   
   top "second"
-    occursOnceWhen never # do
+    occursOnceWhen (gameTimePassed $ seconds 60) # do
     ln "another event!"
     choices # do
       prompt "Run!" 
