@@ -1,7 +1,5 @@
 module Script.Keywords where
 
-
-
 import Common.Annex ((|>))
 import Data.Enum (class BoundedEnum, toEnum)
 import Data.List
@@ -10,7 +8,7 @@ import Data.Time (Time(..), setSecond)
 import Data.Tuple (Tuple(..))
 import Game.Types.ActionName (Name(..))
 import Game.Types.Condition (Condition(..), PureCondition(..))
-import Game.Types.Effect (Effect)
+import Game.Types.Effect (Effect(..))
 import Game.Types.Story (Story(..))
 import Game.Types.StoryEvent (AtomicEvent(..), Choice(..), ConditionedEvent(..), StoryEvent(..))
 import Game.Types.TopLevelEvent (body, reoccurring, trigger)
@@ -50,8 +48,8 @@ reoccuringWhen = true
 occursOnceWhen ∷ Boolean
 occursOnceWhen = false
 
-top ∷ String → Boolean → Condition → StoryEvent → StoryBuilder
-top n r c e =
+makeTopLevel ∷ String → Boolean → Condition → StoryEvent → StoryBuilder
+makeTopLevel n r c e =
   let 
     tl = TopLevelEvent.new n
                |> (if r then reoccurring else identity)
@@ -59,6 +57,12 @@ top n r c e =
                |> (body e)
   in
     build (Story [tl])
+
+top ∷ Boolean → Condition → StoryEvent → StoryBuilder
+top = makeTopLevel ""
+
+named ∷ String → StoryEvent → StoryBuilder
+named n = makeTopLevel n false never 
 
 -- STORY EVENT HELPERS --
 
@@ -156,6 +160,11 @@ milestoneAtCount = (\m c → Pure (MilestoneAtCount m c))
 
 milestoneGreaterThan ∷ String → Int → Condition
 milestoneGreaterThan = (\m c → Pure (MilestoneGreaterThan m c))
+
+-- EFFECT HELPERS --
+
+activateAction ∷ String → Effect
+activateAction = UserDefined >>> ActivateAction
 
 -- TIME HELPERS --
 
