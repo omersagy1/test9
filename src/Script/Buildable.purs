@@ -30,3 +30,11 @@ instance buildableStoryEvent ∷ Buildable StoryEvent where
 
   default ∷ StoryEvent
   default = Sequenced Nil
+
+
+instance buildableList ∷ Buildable (List a) where
+  combine ∷ List a → List a → List a
+  combine = (<>)
+
+  default ∷ List a
+  default = Nil

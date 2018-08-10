@@ -1,18 +1,27 @@
 module Script.Keywords where
 
-import Prelude (Unit, identity, unit, (>>>))
-import Data.Time (Time)
+import Data.List
 
 import Common.Annex ((|>))
+import Data.Time (Time)
 import Game.Types.ActionName (Name(..))
 import Game.Types.Condition (Condition(..), PureCondition(..))
 import Game.Types.Effect (Effect)
 import Game.Types.Story (Story(..))
-import Game.Types.StoryEvent (AtomicEvent(..), ConditionedEvent(..), StoryEvent(..))
+import Game.Types.StoryEvent (AtomicEvent(..), Choice(..), ConditionedEvent(..), StoryEvent(..))
 import Game.Types.TopLevelEvent (body, reoccurring, trigger)
 import Game.Types.TopLevelEvent as TopLevelEvent
+import Prelude (Unit, identity, unit, (>>>), ($))
 import Script.Buildable (class Buildable)
 import Script.Builder (Builder(..), getConstruct)
+
+-- BUILDER HELPERS --
+
+type EventBuilder = Builder StoryEvent Unit
+
+type StoryBuilder = Builder Story Unit
+
+type ChoicesBuilder = Builder (List Choice) Unit
 
 
 begin ∷ ∀ s. Builder s Unit → s
@@ -21,15 +30,20 @@ begin = getConstruct
 build ∷ ∀ a. Buildable a ⇒ a → Builder a Unit
 build x = BD x unit
 
+nestBuilder ∷ ∀ a b. (a → b) → Builder a Unit → b
+nestBuilder fn (BD x unit) = fn x
+infixr 0 nestBuilder as #
+
 
 -- TOP LEVEL EVENT HELPERS --
+
 reoccuringWhen ∷ Boolean
 reoccuringWhen = true
 
 occursOnceWhen ∷ Boolean
 occursOnceWhen = false
 
-top ∷ String → Boolean → Condition → StoryEvent → Builder Story Unit
+top ∷ String → Boolean → Condition → StoryEvent → StoryBuilder
 top n r c e =
   let 
     tl = TopLevelEvent.new n
@@ -41,27 +55,32 @@ top n r c e =
 
 -- STORY EVENT HELPERS --
 
-ln ∷ String → Builder StoryEvent Unit
+ln ∷ String → EventBuilder
 ln text = build (Atomic (Narration text))
 
-di ∷ String → Builder StoryEvent Unit
+di ∷ String → EventBuilder
 di text = build (Atomic (Dialogue text))
 
-restrict ∷ Builder StoryEvent Unit
+restrict ∷ EventBuilder
 restrict = build (Atomic StartInteraction)
 
-resume ∷ Builder StoryEvent Unit
+resume ∷ EventBuilder
 resume = build (Atomic EndInteraction)
 
-cond ∷ Condition → StoryEvent → Builder StoryEvent Unit
+cond ∷ Condition → StoryEvent → EventBuilder
 cond c e = build (Conditioned (ConditionedEvent c e))
 
-effect ∷ Effect → Builder StoryEvent Unit
+effect ∷ Effect → EventBuilder
 effect e = build (Atomic (Effectful e))
 
-goto ∷ String → Builder StoryEvent Unit
+goto ∷ String → EventBuilder
 goto s = build (Atomic (Goto s))
 
+choices ∷ List Choice → EventBuilder
+choices c = build (PlayerChoice c)
+
+prompt ∷ String → StoryEvent → ChoicesBuilder
+prompt s e = build $ singleton $ Choice { prompt: s, consq: e, condition: unconditionally }
 
 -- CONDITION HELPERS --
 
