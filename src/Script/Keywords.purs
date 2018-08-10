@@ -21,7 +21,7 @@ type EventBuilder = Builder StoryEvent Unit
 
 type StoryBuilder = Builder Story Unit
 
-type ChoicesBuilder = Builder (List Choice) Unit
+type ListBuilder a = Builder (List a) Unit
 
 
 begin ∷ ∀ s. Builder s Unit → s
@@ -30,8 +30,10 @@ begin = getConstruct
 build ∷ ∀ a. Buildable a ⇒ a → Builder a Unit
 build x = BD x unit
 
+-- NOTE: This is not the same as the default (#)
+-- from the Prelude!
 nestBuilder ∷ ∀ a b. (a → b) → Builder a Unit → b
-nestBuilder fn (BD x unit) = fn x
+nestBuilder fn bd = fn (getConstruct bd)
 infixr 0 nestBuilder as #
 
 
@@ -79,8 +81,23 @@ goto s = build (Atomic (Goto s))
 choices ∷ List Choice → EventBuilder
 choices c = build (PlayerChoice c)
 
-prompt ∷ String → StoryEvent → ChoicesBuilder
+prompt ∷ String → StoryEvent → ListBuilder Choice
 prompt s e = build $ singleton $ Choice { prompt: s, consq: e, condition: unconditionally }
+
+promptIf ∷ Condition → String → StoryEvent → ListBuilder Choice
+promptIf c s e = build $ singleton $ Choice { prompt: s, consq: e, condition: c }
+
+cases ∷ List ConditionedEvent → EventBuilder 
+cases es = build $ (Cases es)
+
+when ∷ Condition → StoryEvent → ListBuilder ConditionedEvent
+when c e = build $ singleton $ (ConditionedEvent c e)
+
+rand ∷ List StoryEvent → EventBuilder 
+rand es = build $ (Random es)
+
+add ∷ StoryEvent → ListBuilder StoryEvent
+add e = build $ singleton e
 
 -- CONDITION HELPERS --
 
