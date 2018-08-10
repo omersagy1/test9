@@ -3,7 +3,7 @@ module Script.Scene where
 import Game.Types.Effect (Effect(..))
 import Game.Types.Story (Story)
 import Prelude (discard, ($))
-import Script.Keywords (gameTimePassed, seconds, add, rand, cases, when, (#), prompt, promptIf, begin, choices, cond, di, effect, ln, never, occursOnceWhen, restrict, resume, top, unconditionally)
+import Script.Keywords (gameTimePassed, seconds, weighted, unweighted, rand, cases, when, (#), prompt, promptIf, begin, choices, cond, di, effect, ln, never, occursOnceWhen, restrict, resume, top, unconditionally)
 
 
 story ∷ Story
@@ -43,10 +43,10 @@ story = begin do
           when unconditionally # do
             ln "another possiblity..."
         rand # do
-          add # do 
+          unweighted # do 
             ln "randchoice 1"
-          add # do 
+          unweighted # do 
             ln "randchoice 2"
             ln "doubling up!"
-          add # do 
+          weighted 3 # do 
             ln "randchoice 3"

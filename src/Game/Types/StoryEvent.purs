@@ -1,6 +1,7 @@
 module Game.Types.StoryEvent where
 
-import Data.List 
+import Data.List
+import Data.Tuple (Tuple)
 import Game.Types.Condition (Condition)
 import Game.Types.Effect (Effect)
 import Prelude (class Show, show, (<>))
@@ -13,8 +14,10 @@ data StoryEvent =
   -- Choices will only appear if their condition is either Nothing or evaluates to True.
   | PlayerChoice (List Choice)
   | Conditioned ConditionedEvent
-  -- All options have equal weight.
-  | Random (List StoryEvent)
+  -- List of options and their relative weights.
+  -- A weight of 2 has twice the chance of being
+  -- picked as a weight of 1.
+  | Random (List (Tuple StoryEvent Int))
   -- First event which satisfies its condition is picked.
   | Cases (List ConditionedEvent) 
 

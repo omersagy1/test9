@@ -7,6 +7,7 @@ import Data.Enum (class BoundedEnum, toEnum)
 import Data.List
 import Data.Maybe (fromJust)
 import Data.Time (Time(..), setSecond)
+import Data.Tuple (Tuple(..))
 import Game.Types.ActionName (Name(..))
 import Game.Types.Condition (Condition(..), PureCondition(..))
 import Game.Types.Effect (Effect)
@@ -97,11 +98,14 @@ cases es = build $ (Cases es)
 when ∷ Condition → StoryEvent → ListBuilder ConditionedEvent
 when c e = build $ singleton $ (ConditionedEvent c e)
 
-rand ∷ List StoryEvent → EventBuilder 
+rand ∷ List (Tuple StoryEvent Int) → EventBuilder 
 rand es = build $ (Random es)
 
-add ∷ StoryEvent → ListBuilder StoryEvent
-add e = build $ singleton e
+unweighted ∷ StoryEvent → ListBuilder (Tuple StoryEvent Int)
+unweighted e = build $ singleton $ (Tuple e 1)
+
+weighted ∷ Int → StoryEvent → ListBuilder (Tuple StoryEvent Int)
+weighted w e = build $ singleton $ (Tuple e w)
 
 -- CONDITION HELPERS --
 
