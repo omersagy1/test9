@@ -1,9 +1,10 @@
-module Data.Scene where
+module Script.Scene where
 
 import Prelude (discard)
 
 import Common.Annex ((<|))
 import Game.Types.Story (Story)
+import Game.Types.Effect
 import Script.Keywords
 
 
@@ -23,3 +24,4 @@ story = begin do
       ln "always show this!"
       ln "and this!"
     ln "Back to normal"
+    effect <| AddToResource "wood" 1

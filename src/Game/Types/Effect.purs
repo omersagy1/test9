@@ -1,5 +1,6 @@
 module Game.Types.Effect where
 
+import Prelude (class Show)
 
 import Game.Types.ActionName (Name)
 
@@ -18,3 +19,8 @@ data Effect = NoEffect
               | GameOver
               | Compound (Array Effect)
               | Compound2 Effect Effect
+
+
+instance showEffect ∷ Show Effect where
+  show ∷ Effect → String
+  show e = "(some effect)"

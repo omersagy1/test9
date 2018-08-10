@@ -49,6 +49,8 @@ instance showStoryEvent ∷ Show StoryEvent where
       Atomic EndInteraction → "end-interaction"
       Atomic (Narration s) → "ln: " <> s
       Atomic (Dialogue s) → "di: " <> s
+      Atomic (Effectful effect) → "effect: " <> (show effect)
+      Atomic (Goto s) → "goto: " <> s
       Conditioned (ConditionedEvent c ce) → "conditioned: " <> (show ce)
       Sequenced es → (show es)
       other → "unimplemented"

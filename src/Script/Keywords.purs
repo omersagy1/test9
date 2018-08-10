@@ -1,15 +1,16 @@
 module Script.Keywords where
 
-import Game.Types.ActionName
+import Prelude (Unit, identity, unit, (>>>))
+import Data.Time (Time)
 
 import Common.Annex ((|>))
-import Data.Time (Time)
+import Game.Types.ActionName (Name(..))
 import Game.Types.Condition (Condition(..), PureCondition(..))
+import Game.Types.Effect (Effect)
 import Game.Types.Story (Story(..))
 import Game.Types.StoryEvent (AtomicEvent(..), ConditionedEvent(..), StoryEvent(..))
 import Game.Types.TopLevelEvent (body, reoccurring, trigger)
 import Game.Types.TopLevelEvent as TopLevelEvent
-import Prelude (Unit, identity, unit, (>>>))
 import Script.Buildable (class Buildable)
 import Script.Builder (Builder(..), getConstruct)
 
@@ -54,6 +55,13 @@ resume = build (Atomic EndInteraction)
 
 cond ∷ Condition → StoryEvent → Builder StoryEvent Unit
 cond c e = build (Conditioned (ConditionedEvent c e))
+
+effect ∷ Effect → Builder StoryEvent Unit
+effect e = build (Atomic (Effectful e))
+
+goto ∷ String → Builder StoryEvent Unit
+goto s = build (Atomic (Goto s))
+
 
 -- CONDITION HELPERS --
 
