@@ -7,4 +7,4 @@
 /.psc*
 /.purs*
 /.psa*
-dist/purs_app.js
+rnapp/purs_app.js
