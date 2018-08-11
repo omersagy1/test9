@@ -8,6 +8,9 @@ import Halogen as H
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 
+import Script.Scene as Scene
+
+
 data Query a = ToggleState a
 
 type State = { on ∷ Boolean }
@@ -39,7 +42,9 @@ component =
               then "Don't push me"
               else "I said don't push me!"
           ]
+      , HH.div_ [HH.text (show Scene.story)]
       ]
+
 
   eval ∷ Query ~> H.ComponentDSL State Query Void m
   eval = case _ of

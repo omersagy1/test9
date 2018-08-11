@@ -16,7 +16,7 @@ import Web.DOM.ParentNode (QuerySelector(..))
 
 
 manualEntryPoint ∷ Effect Unit
-manualEntryPoint = void $ unsafePartial do 
+manualEntryPoint = void $ unsafePartial do
   Just canvas ← getCanvasElementById "canvas"
   ctx ← getContext2D canvas
   _ ← setFillStyle ctx "#0000FF"
