@@ -4,12 +4,10 @@ import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 export const Counter = (props) => {
   return (
 
-    <View style={styles.app}>
-      <Text> Counter! </Text>;
+    <View style={styles.widget}>
 
-      <View style={styles.display}>
-        <Text> Hello, World! </Text>
-        <Text> Counter: {props.count} </Text>
+      <View style={styles.numberDisplay}>
+        <Text style={styles.counterText}> Counter: {props.count} </Text>
       </View>
 
       <View style={styles.buttonSection}>
@@ -24,20 +22,33 @@ export const Counter = (props) => {
 
 const styles = StyleSheet.create({
 
-  app: {
-    margin: 10,
-    flex: 1,
-    justifyContent: 'center'
+  widget: {
+    height: 300,
+    alignSelf: 'stretch',
+    backgroundColor: "lightgreen",
+    borderWidth: 2,
+    borderColor: 'blue'
   },
 
-  display: {
+  numberDisplay: {
     backgroundColor: "lightblue",
-    flex: 0,
-    alignItems: "center"
+    height: 40,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+
+  counterText: {
+    fontSize: 20,
+    color: 'purple',
   },
 
   buttonSection: {
-    backgroundColor: "lightgreen"
+    backgroundColor: "lightyellow",
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
+
 
 });

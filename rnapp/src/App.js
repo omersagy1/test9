@@ -3,6 +3,7 @@ import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 
 import { PURESCRIPT } from './Purs';
 import { Counter } from './Counter';
+import { ToggleButton } from './ToggleButton';
 
 
 export default class App extends Component {
@@ -45,15 +46,35 @@ export default class App extends Component {
     return PURESCRIPT.getCounter(this.state.model);
   }
 
-
   render() {
     const counter = this.counter();
     return (
-      <View>
-        <Counter count={this.counter()}
+      <View style={styles.app}>
+        <Counter count={this.counter()} 
                  resetCallback={this.reset}
-                 incCallback={this.increment} />
+                 incCallback={this.increment}></Counter>
+
+        <View style={styles.toggle}>
+          <ToggleButton callback={this.toggle} />
+        </View>
+
       </View>
     );
   }
 }
+
+
+const styles = StyleSheet.create({
+
+  app: {
+    flex: 1,
+    backgroundColor: "orange",
+    paddingTop: 100,
+    alignItems: 'center'
+  },
+
+  toggle: {
+    marginTop: 50
+  }
+
+});
