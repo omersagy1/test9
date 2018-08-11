@@ -8,20 +8,23 @@ import Prelude
 initialModel ∷ Model
 initialModel = init
 
-toggle ∷ Model → Model
-toggle model = update Toggle model
-
-reset ∷ Model → Model
-reset model = update ResetCounter model
-
-inc ∷ Model → Model
-inc model = update IncrementCounter model
+updateModel ∷ Message → Model → Model
+updateModel = update
 
 getCounter ∷ Model → Int
 getCounter (Model model) = model.counter
 
 getToggleState ∷ Model → Boolean
 getToggleState (Model model) = model.toggle
+
+toggleMessage ∷ Message
+toggleMessage = Toggle
+
+incMessage ∷ Message
+incMessage = IncrementCounter
+
+resetMessage ∷ Message
+resetMessage = ResetCounter
 
 
 -- END INTERFACE 

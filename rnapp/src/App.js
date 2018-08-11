@@ -16,34 +16,39 @@ export default class App extends Component {
     requestAnimationFrame(this.loop);
   }
 
-  loop = (time) => {
+  processMessage = (msg) => {
     this.setState(prev => {
-      return { model: PURESCRIPT.inc(prev.model) };
+      let newModel = PURESCRIPT.updateModel(msg)(prev.model);
+      return this.state = {
+        model: newModel
+      }
     })
+  }
+
+  loop = (time) => {
+    this.processMessage(PURESCRIPT.incMessage);
     requestAnimationFrame(this.loop);
   }
 
   increment = () => {
-    this.setState(prev => {
-      return { model: PURESCRIPT.inc(prev.model) };
-    })
+    this.processMessage(PURESCRIPT.incMessage);
   }
 
   reset = () => {
-    this.setState(prev => {
-      return { model: PURESCRIPT.reset(prev.model) };
-    })
+    this.processMessage(PURESCRIPT.resetMessage);
   }
 
   toggle = () => {
-    this.setState(prev => {
-      return { model: PURESCRIPT.toggle(prev.model) };
-    })
+    this.processMessage(PURESCRIPT.toggleMessage);
+  }
+
+  counter = () => {
+    return PURESCRIPT.getCounter(this.state.model);
   }
 
 
   render() {
-    const counter = PURESCRIPT.getCounter(this.state.model);
+    const counter = this.counter();
     return (
       <View style={styles.app}>
         <View style={styles.display}>
