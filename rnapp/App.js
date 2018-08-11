@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 import {PS} from './purs_app';
 
-const FFI = PS["Main"];
+
+const PURESCRIPT = PS["Main"];
 
 
 export default class App extends Component {
@@ -10,39 +11,39 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      model: FFI.initialModel
+      model: PURESCRIPT.initialModel
     }
     requestAnimationFrame(this.loop);
   }
 
   loop = (time) => {
     this.setState(prev => {
-      return { model: FFI.inc(prev.model) };
+      return { model: PURESCRIPT.inc(prev.model) };
     })
     requestAnimationFrame(this.loop);
   }
 
   increment = () => {
     this.setState(prev => {
-      return { model: FFI.inc(prev.model) };
+      return { model: PURESCRIPT.inc(prev.model) };
     })
   }
 
   reset = () => {
     this.setState(prev => {
-      return { model: FFI.reset(prev.model) };
+      return { model: PURESCRIPT.reset(prev.model) };
     })
   }
 
   toggle = () => {
     this.setState(prev => {
-      return { model: FFI.toggle(prev.model) };
+      return { model: PURESCRIPT.toggle(prev.model) };
     })
   }
 
 
   render() {
-    const counter = FFI.getCounter(this.state.model);
+    const counter = PURESCRIPT.getCounter(this.state.model);
     return (
       <View style={styles.app}>
         <View style={styles.display}>
@@ -59,6 +60,7 @@ export default class App extends Component {
 }
 
 const styles = StyleSheet.create({
+
   app: {
     margin: 10,
     flex: 1,
