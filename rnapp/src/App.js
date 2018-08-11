@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
-import {PS} from './purs_app';
+import { PS } from '../purs_app';
 
 
 const PURESCRIPT = PS["Main"];
