@@ -46,10 +46,21 @@ export default class App extends Component {
     return PURESCRIPT.getCounter(this.state.model);
   }
 
+  toggleState = () => {
+    return PURESCRIPT.getToggleState(this.state.model);
+  }
+
   render() {
     const counter = this.counter();
+    const toggled = this.toggleState();
+
+    let bgStyle = [styles.app]
+    if (toggled) {
+      bgStyle.push(styles.toggledBackground);
+    }
+
     return (
-      <View style={styles.app}>
+      <View style={bgStyle}>
         <Counter count={this.counter()} 
                  resetCallback={this.reset}
                  incCallback={this.increment}></Counter>
@@ -71,6 +82,10 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     paddingTop: 100,
     alignItems: 'center'
+  },
+
+  toggledBackground: {
+    backgroundColor: "green"
   },
 
   toggle: {

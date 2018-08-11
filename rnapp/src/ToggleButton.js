@@ -5,7 +5,8 @@ import { Alert, TouchableHighlight, StyleSheet, Text, View } from 'react-native'
 export const ToggleButton = (props) => {
   return (
     <TouchableHighlight style={styles.thing} 
-                        onPress={props.callback}>
+                        onPress={props.callback}
+                        underlayColor='purple'>
       <Text style={styles.label}> TOGGLE </Text>
     </TouchableHighlight>
   )
@@ -19,7 +20,9 @@ const styles = StyleSheet.create({
     width: 250,
     backgroundColor: 'red',
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    borderWidth: 2,
+    borderColor: 'black'
   },
 
   label: {
