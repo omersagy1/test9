@@ -1,13 +1,40 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Alert, Button, Text, View } from 'react-native';
 import {PS} from './purs_app';
 
-export default class Bananas extends Component {
+const FFI = PS["Main"];
+
+
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      model: FFI.initialModel
+    }
+  }
+
+  increment = () => {
+    this.setState(prev => {
+      return { model: FFI.inc(prev.model) };
+    })
+  }
+
+  reset = () => {
+    this.setState(prev => {
+      return { model: FFI.reset(prev.model) };
+    })
+  }
+
   render() {
-    let story = PS.Main.asString;
+    const counter = FFI.getCounter(this.state.model);
     return (
       <View>
-        <Text> {story} </Text>
+        <Text> Hello, World! </Text>
+        <Text> {counter} </Text>
+        <Button onPress={this.increment} title="Increment Counter" />
+        <Button onPress={this.reset} title="Reset Counter" />
+
       </View>
     );
   }
