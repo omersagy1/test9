@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Alert, Button, StyleSheet, Text, View } from 'react-native';
-import { PS } from '../purs_app';
 
-
-const PURESCRIPT = PS["Main"];
+import { PURESCRIPT } from './Purs';
+import { Counter } from './Counter';
 
 
 export default class App extends Component {
@@ -50,36 +49,11 @@ export default class App extends Component {
   render() {
     const counter = this.counter();
     return (
-      <View style={styles.app}>
-        <View style={styles.display}>
-          <Text> Hello, World! </Text>
-          <Text> Counter: {counter} </Text>
-        </View>
-        <View style={styles.buttonSection}>
-          <Button onPress={this.increment} title="Increment Counter" />
-          <Button onPress={this.reset} title="Reset Counter" />
-        </View>
+      <View>
+        <Counter count={this.counter()}
+                 resetCallback={this.reset}
+                 incCallback={this.increment} />
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-
-  app: {
-    margin: 10,
-    flex: 1,
-    justifyContent: 'center'
-  },
-
-  display: {
-    backgroundColor: "lightblue",
-    flex: 0,
-    alignItems: "center"
-  },
-
-  buttonSection: {
-    backgroundColor: "lightgreen"
-  }
-
-});
