@@ -4,7 +4,11 @@ import Script.Keywords
 
 import Game.Types.Effect (Effect(..))
 import Game.Types.Story (Story)
-import Prelude (discard)
+import Prelude (discard, show)
+
+
+asString ∷ String
+asString = show story
 
 
 story ∷ Story

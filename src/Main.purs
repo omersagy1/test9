@@ -14,6 +14,11 @@ import Partial.Unsafe (unsafePartial)
 import Prelude (bind, Unit, unit, discard)
 import Web.DOM.ParentNode (QuerySelector(..))
 
+import Script.Scene as Scene
+
+asString ∷ String
+asString = Scene.asString
+
 
 manualEntryPoint ∷ Effect Unit
 manualEntryPoint = void $ unsafePartial do
