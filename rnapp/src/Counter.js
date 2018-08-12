@@ -7,7 +7,7 @@ export const Counter = (props) => {
     <View style={styles.widget}>
 
       <View style={styles.numberDisplay}>
-        <Text style={styles.counterText}> Counter: {props.count} </Text>
+        <Text style={styles.counterText}> Seconds Passed: {props.count} </Text>
       </View>
 
       <View style={styles.buttonSection}>

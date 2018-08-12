@@ -25,9 +25,13 @@ export default class App extends Component {
     })
   }
 
-  loop = (time) => {
-    this.processMessage(PURESCRIPT.incMessage);
+  loop = (currentTime) => {
+    this.updateTime(currentTime);
     requestAnimationFrame(this.loop);
+  }
+
+  updateTime = (t) => {
+    this.processMessage(PURESCRIPT.updateTimeMessage(t));
   }
 
   increment = () => {
@@ -50,6 +54,10 @@ export default class App extends Component {
     return PURESCRIPT.getToggleState(this.state.model);
   }
 
+  timePassed = () => {
+      return PURESCRIPT.getTimePassed(this.state.model);
+  }
+
   render() {
     const counter = this.counter();
     const toggled = this.toggleState();
@@ -61,7 +69,7 @@ export default class App extends Component {
 
     return (
       <View style={bgStyle}>
-        <Counter count={this.counter()} 
+        <Counter count={ Math.round(this.timePassed() / 1000.0) } 
                  resetCallback={this.reset}
                  incCallback={this.increment}></Counter>
 
