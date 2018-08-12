@@ -1,10 +1,11 @@
 module Common.Time where
 
-import Prelude ((*), (/))
-import Data.Int (toNumber)
+import Common.NumCompat (class NumberCompatible, (*))
+import Prelude ((/))
 
 
 type Time = Number
+
 
 second ∷ Time
 second = 1000.0
@@ -18,5 +19,5 @@ milli = 1.0
 toSeconds ∷ Time → Number
 toSeconds x = x / second
 
-seconds ∷ Int → Time
-seconds x = (toNumber x) * second
+seconds ∷ forall a. NumberCompatible a => a → Time
+seconds x = x * second

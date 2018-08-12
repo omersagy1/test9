@@ -1,6 +1,8 @@
 module Common.Annex where
 
 import Prelude ((#), ($))
+import Prelude as P
+import Data.Int
 import Data.Tuple (Tuple, snd)
 
 
