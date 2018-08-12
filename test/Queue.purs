@@ -11,8 +11,8 @@ import Common.Annex ((|>), ignoreResult)
 import Common.Queue (dequeue, enqueue, new, size, push, peek)
 
 
-main :: Effect Unit
-main = do
+suite :: Effect Unit
+suite = do
   oneDequeue
   threeEl
   dqEntire

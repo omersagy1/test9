@@ -1,4 +1,4 @@
-module TimedQueueTest where
+module Test.TimedQueue where
 
 import Prelude (Unit, discard, (==))
 import Data.Maybe (Maybe(..))
