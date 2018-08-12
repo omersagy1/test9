@@ -13,3 +13,9 @@ minute = 60.0 * second
 
 milli ∷ Time
 milli = 1.0
+
+toSeconds ∷ Time → Number
+toSeconds x = x / second
+
+seconds ∷ Number → Time
+seconds x = x * second

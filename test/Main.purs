@@ -2,8 +2,10 @@ module Test.Main where
 
 import Prelude
 import Effect (Effect)
-import Effect.Console (log)
+
+import Test.Queue as Queue
+
 
 main :: Effect Unit
 main = do
-  log "You should add some tests."
+  Queue.main
