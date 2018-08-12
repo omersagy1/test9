@@ -1,4 +1,4 @@
-module Queue.TimedQueue where
+module Common.TimedQueue where
 
 import Prelude (map, (+), (>=), (==))
 import Data.Maybe (Maybe(..))

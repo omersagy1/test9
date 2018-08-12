@@ -1,6 +1,7 @@
 module Common.Time where
 
-import Prelude
+import Prelude ((*), (/))
+import Data.Int (toNumber)
 
 
 type Time = Number
@@ -17,5 +18,5 @@ milli = 1.0
 toSeconds ∷ Time → Number
 toSeconds x = x / second
 
-seconds ∷ Number → Time
-seconds x = x * second
+seconds ∷ Int → Time
+seconds x = (toNumber x) * second
