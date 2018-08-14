@@ -1,8 +1,6 @@
 module Common.Annex where
 
 import Prelude ((#), ($))
-import Prelude as P
-import Data.Int
 import Data.Tuple (Tuple, snd)
 
 
@@ -16,5 +14,5 @@ pipeBack = ($)
 infixr 0 pipeBack as <|
 
 
-ignoreResult :: forall s a. (s -> Tuple a s) -> (s -> s)
-ignoreResult f = (\x -> (f x) |> snd)
+ignoreResult ∷ ∀ s a. (s → Tuple a s) → (s → s)
+ignoreResult f = (\x → (f x) |> snd)

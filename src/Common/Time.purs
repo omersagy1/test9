@@ -19,5 +19,5 @@ milli = 1.0
 toSeconds ∷ Time → Number
 toSeconds x = x / second
 
-seconds ∷ forall a. NumberCompatible a => a → Time
+seconds ∷ ∀ a. NumberCompatible a ⇒ a → Time
 seconds x = x * second

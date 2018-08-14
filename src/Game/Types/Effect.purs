@@ -15,7 +15,7 @@ data Effect = NoEffect
               | IncrementMilestone String
               | ActivateAction Name
               | DeactivateAction Name
-              | StokeFireEff
+              | StokeFire
               | GameOver
               | Compound (Array Effect)
               | Compound2 Effect Effect
