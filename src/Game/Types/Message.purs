@@ -1,4 +1,4 @@
-module Game.Type.Message where
+module Game.Types.Message where
 
 import Common.Time (Time)
 import Game.Types.ActionName as ActionName

@@ -1,94 +1,22 @@
 module Main where
 
-import Common.Annex ((|>))
-import Common.Time
+import Game.Init as Init
+import Game.Update as Update
+import Game.Types.Message (Message(..))
+import Game.Types.Model (Model)
 
-import Data.Maybe (Maybe(..))
-import Prelude (not, (+), (-))
-
-
--- INTERFACE TO BE USED BY JAVASCRIPT 
+-- Interface to be accessed by Javascript.
+-- The only things that the JS should ever
+-- call are the functions in this file.
 
 initialModel ∷ Model
-initialModel = init
+initialModel = Init.initialModel
 
 updateModel ∷ Message → Model → Model
-updateModel = update
-
-getCounter ∷ Model → Int
-getCounter (Model model) = model.counter
-
-getToggleState ∷ Model → Boolean
-getToggleState (Model model) = model.toggle
+updateModel = Update.update
 
 getTimePassed ∷ Model → Number
-getTimePassed (Model model) = model.gameTimePassed
-
-
-toggleMessage ∷ Message
-toggleMessage = Toggle
-
-incMessage ∷ Message
-incMessage = IncrementCounter
-
-resetMessage ∷ Message
-resetMessage = ResetCounter
+getTimePassed model = model.gameTimePassed
 
 updateTimeMessage ∷ Number → Message
 updateTimeMessage t = UpdateTime t
-
-
--- END INTERFACE 
-
-
-data Model = Model
-  { counter ∷ Int
-  , toggle ∷ Boolean
-  , timeLastFrame ∷ Maybe Time
-  , gameTimePassed ∷ Time
-  }
-
-
-data Message = Toggle
-               | IncrementCounter
-               | ResetCounter
-               | UpdateTime Time
-
-
-init ∷ Model
-init = Model 
-  { counter: 0
-  , toggle: false 
-  , timeLastFrame: Nothing
-  , gameTimePassed: 0.0
-  }
-
-
-update ∷ Message → Model → Model
-update msg (Model model) =
-  case msg of
-    UpdateTime timestamp → updateTime timestamp (Model model)
-    Toggle → Model (model { toggle = not model.toggle })
-    IncrementCounter → Model (model { counter = model.counter + 1 })
-    ResetCounter → Model (model { counter = 0 })
-
-
-updateTime ∷ Time → Model → Model
-updateTime t (Model model) =
-  updateTimePassed t (Model model)
-  |> updateTimeLastFrame t
-
-
-updateTimeLastFrame ∷ Time → Model → Model
-updateTimeLastFrame t (Model model) =
-  Model (model { timeLastFrame = Just t })
-
-
-updateTimePassed ∷ Time → Model → Model
-updateTimePassed t (Model model) =
-  let 
-    tot = case model.timeLastFrame of
-            Nothing → 0.0
-            Just x → model.gameTimePassed + (t - x)
-  in
-    Model (model {gameTimePassed = tot}) 

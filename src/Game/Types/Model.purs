@@ -1,10 +1,9 @@
 module Game.Types.Model where
 
-import Data.List (List)
-import Data.Maybe (Maybe)
-
 import Common.Animation (Animation)
+import Common.Time (Time)
 import Common.TimedQueue (TimedQueue)
+import Data.Maybe (Maybe)
 import Game.Types.GameState (GameState)
 import Game.Types.Story (Story)
 import Game.Types.StoryEvent (Choice, StoryEvent)
@@ -19,9 +18,13 @@ type Model =
   { gameState ∷ GameState
 
   , initialized ∷ Boolean
+  
+  , timeLastFrame ∷ Maybe Time
+
+  , gameTimePassed ∷ Number
 
   -- Messages to be displayed on-screen.
-  , messageHistory ∷ List String 
+  , messageHistory ∷ Array String 
 
   -- Events waiting to be executed.
   , eventQueue ∷ TimedQueue StoryEvent
@@ -33,7 +36,7 @@ type Model =
   , fastForward ∷ Boolean
 
   -- The choice the player must make to continue the game.
-  , activeChoices ∷ List Choice
+  , activeChoices ∷ Array Choice
 
   , activeScrollingMessage ∷ Maybe ScrollingMessage
 
