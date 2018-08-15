@@ -34,48 +34,15 @@ export default class App extends Component {
     this.processMessage(PURESCRIPT.updateTimeMessage(t));
   }
 
-  increment = () => {
-    this.processMessage(PURESCRIPT.incMessage);
-  }
-
-  reset = () => {
-    this.processMessage(PURESCRIPT.resetMessage);
-  }
-
-  toggle = () => {
-    this.processMessage(PURESCRIPT.toggleMessage);
-  }
-
-  counter = () => {
-    return PURESCRIPT.getCounter(this.state.model);
-  }
-
-  toggleState = () => {
-    return PURESCRIPT.getToggleState(this.state.model);
-  }
-
   timePassed = () => {
       return PURESCRIPT.getTimePassed(this.state.model);
   }
 
   render() {
-    const counter = this.counter();
-    const toggled = this.toggleState();
-
-    let bgStyle = [styles.app]
-    if (toggled) {
-      bgStyle.push(styles.toggledBackground);
-    }
-
     return (
-      <View style={bgStyle}>
-        <Counter count={ Math.round(this.timePassed() / 1000.0) } 
-                 resetCallback={this.reset}
-                 incCallback={this.increment}></Counter>
+      <View>
 
-        <View style={styles.toggle}>
-          <ToggleButton callback={this.toggle} />
-        </View>
+        <Counter count={ Math.round(this.timePassed() / 1000.0) } />
 
       </View>
     );

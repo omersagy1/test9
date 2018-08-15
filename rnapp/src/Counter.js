@@ -10,11 +10,6 @@ export const Counter = (props) => {
         <Text style={styles.counterText}> Seconds Passed: {props.count} </Text>
       </View>
 
-      <View style={styles.buttonSection}>
-        <Button onPress={props.incCallback} title="Increment Counter" />
-        <Button onPress={props.resetCallback} title="Reset Counter" />
-      </View>
-
     </View>
   )
 }
