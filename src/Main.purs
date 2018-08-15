@@ -1,5 +1,7 @@
 module Main where
 
+import Prelude ((/))
+
 import Game.Init as Init
 import Game.Update as Update
 import Game.Types.Message (Message(..))
@@ -15,8 +17,12 @@ initialModel = Init.initialModel
 updateModel ∷ Message → Model → Model
 updateModel = Update.update
 
-getTimePassed ∷ Model → Number
-getTimePassed model = model.gameTimePassed
+getTimePassedMillis ∷ Model → Number
+getTimePassedMillis model = model.gameTimePassed
 
+getTimePassedSeconds ∷ Model → Number
+getTimePassedSeconds model = model.gameTimePassed / 1000.0
+
+-- 't' should be measured in milliseconds.
 updateTimeMessage ∷ Number → Message
 updateTimeMessage t = UpdateTime t

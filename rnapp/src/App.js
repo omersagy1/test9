@@ -34,16 +34,14 @@ export default class App extends Component {
     this.processMessage(PURESCRIPT.updateTimeMessage(t));
   }
 
-  timePassed = () => {
-      return PURESCRIPT.getTimePassed(this.state.model);
+  timePassedSeconds = () => {
+      return PURESCRIPT.getTimePassedSeconds(this.state.model);
   }
 
   render() {
     return (
       <View>
-
-        <Counter count={ Math.round(this.timePassed() / 1000.0) } />
-
+        <Counter count={ Math.round(this.timePassedSeconds()) } />
       </View>
     );
   }
