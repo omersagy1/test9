@@ -14,7 +14,7 @@ import Game.Types.Effect (Effect)
 
 type Action =
   { name ∷ Name
-  , active∷ Boolean
+  , active ∷ Boolean
   , effect ∷ Effect
   , cooldown ∷ Cooldown
   , condition ∷ PureCondition

@@ -47,6 +47,8 @@ type Model =
   }
 
 
+-- This is an animated message that progresses one
+-- character at a time.
 type ScrollingMessage =
   { fullText ∷ String
   , animation ∷ Animation

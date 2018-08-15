@@ -1,5 +1,13 @@
 module Game.Types.Item where
 
+import Data.Map (Map)
+import Data.Map as Map
+
+
+class Named a where
+  name ∷ a → String
+
+type NameMap a = Map String a
 
 data Item = Item
   { name ∷ String
@@ -7,13 +15,16 @@ data Item = Item
   , amount ∷ Amount
   }
 
+instance namedItem ∷ Named Item where
+  name ∷ Item → String
+  name (Item i) = i.name
+
 data Amount = Single Boolean
               | Countable Int
               | Continuous Number
 
-class Named a where
-  name ∷ a → String
+init ∷ ∀ a. Named a ⇒ NameMap a
+init = Map.empty
 
-instance namedItem ∷ Named Item where
-  name ∷ Item → String
-  name (Item i) = i.name
+insert ∷ ∀ a. Named a ⇒ a → NameMap a → NameMap a
+insert named m = Map.insert (name named) named m
