@@ -19,7 +19,8 @@
     "purescript-ordered-collections": "^1.0.0",
     "purescript-canvas": "^4.0.0",
     "purescript-datetime": "^4.0.0",
-    "purescript-lcg": "^2.0.0"
+    "purescript-lcg": "^2.0.0",
+    "purescript-strings": "^4.0.0"
   },
   "homepage": "https://github.com/omersagy1/test9",
   "authors": [
