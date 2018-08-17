@@ -7,7 +7,7 @@ import Common.TimedQueue as TimedQueue
 
 import Game.Constants as Constants
 import Game.Types.Condition (Condition)
-import Game.ConditionFns as ConditionFns
+import Game.RunCondition as RunCondition
 import Game.Types.GameState (GameState)
 import Game.Types.Model (Model)
 import Game.Printer as Printer

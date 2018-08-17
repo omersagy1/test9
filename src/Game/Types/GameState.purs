@@ -1,5 +1,7 @@
 module Game.Types.GameState where
 
+import Data.List (List)
+
 import Common.Time (Time)
 import Game.Types.ActionSet (ActionSet)
 import Game.Types.Item (Item)
@@ -10,7 +12,7 @@ import Game.Types.Milestones (Milestones)
 type GameState =
   -- Time passed in the game so far.
   { gameTime ∷ Time
-  , resources ∷ Array Item
+  , resources ∷ List Item
   , fire ∷ Fire
   -- List of actions performed since the last update.
   -- Read by Condition to decide whether to Condition a

@@ -2,6 +2,7 @@ module Script.Scene where
 
 import Script.Keywords
 
+import Common.Time (seconds)
 import Game.Types.Effect (Effect(..))
 import Game.Types.Story (Story)
 import Prelude (discard, show)

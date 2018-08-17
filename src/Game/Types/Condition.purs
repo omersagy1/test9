@@ -1,8 +1,8 @@
 module Game.Types.Condition where
 
 import Prelude (class Show)
-import Data.Time (Time)
 
+import Common.Time (Time)
 import Game.Types.ActionName (Name)
 
 

@@ -1,14 +1,15 @@
 module Game.Printer where
 
-import Common.Annex (maybeToList)
-import Data.List
-import Data.Maybe
-import Data.String
+import Common.Annex (maybeToList, (|>))
+import Data.Int as Int
+import Data.List (List, (:))
+import Data.Maybe (Maybe(..), isJust)
+import Data.String as String
 
 import Common.Animation as Animation
-import Common.Time (Time)
+import Common.Time (Time, seconds)
 import Game.Types.Model (Model, ScrollingMessage)
-import Prelude (not, (<>))
+import Prelude (not, (<>), (*))
 
 
 update ∷ Time → Model → Model
@@ -76,14 +77,14 @@ currentText sm =
   let
     totalNumChars = String.length (sm.fullText)
     fracToDisplay = Animation.currentValue sm.animation
-    numCharsToDisplay = (toFloat totalNumChars) * fracToDisplay
+    numCharsToDisplay = (Int.toNumber totalNumChars) * fracToDisplay
   in
-    String.left (round numCharsToDisplay) sm.fullText
+    String.take (Int.round numCharsToDisplay) sm.fullText
 
 
 timePerCharacter ∷ Time
-timePerCharacter = 0.03 * Time.second
+timePerCharacter = seconds 0.03
 
 
 scrollTime ∷ String → Time
-scrollTime s = (toFloat (String.length s)) * timePerCharacter
+scrollTime s = (Int.toNumber (String.length s)) * timePerCharacter

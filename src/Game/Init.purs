@@ -1,5 +1,6 @@
 module Game.Init where
 
+import Data.List(List(..))
 import Data.Maybe
 
 import Common.TimedQueue as TimedQueue
@@ -17,12 +18,12 @@ initialModel =
   , initialized: false
   , timeLastFrame: Nothing
   , gameTimePassed: 0.0
-  , messageHistory: []
+  , messageHistory: Nil
   , eventQueue: TimedQueue.new
   , story: Scene.story
   , paused: false
   , fastForward: false
-  , activeChoices: []
+  , activeChoices: Nil
   , activeScrollingMessage: Nothing
   , interactionMode: false
   }
@@ -31,7 +32,7 @@ initialModel =
 initialGameState ∷ GameState
 initialGameState =
   { gameTime: 0.0
-  , resources: []
+  , resources: Nil
   , fire: Fire.init 0.0
   , actionHistory: ActionSet.init
   , milestones: Milestones.init

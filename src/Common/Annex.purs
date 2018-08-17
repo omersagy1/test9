@@ -1,8 +1,8 @@
 module Common.Annex where
 
 import Prelude ((#), ($))
-import Data.Maybe
-import Data.List
+import Data.Maybe (Maybe(..))
+import Data.List (List(..), (:))
 import Data.Tuple (Tuple, snd)
 
 
@@ -25,3 +25,9 @@ maybeToList x =
   case x of
     Nothing → Nil
     Just val → val : Nil
+
+maybePred ∷ ∀ a. (a → Boolean) → Maybe a → Boolean
+maybePred pred m =
+  case m of
+    Nothing → false
+    Just x → pred x
