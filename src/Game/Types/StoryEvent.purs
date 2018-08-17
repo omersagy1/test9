@@ -38,7 +38,7 @@ data AtomicEvent =
   -- Executes some kind of state-mutating effect on the game.
   | Effectful Effect
 
-data Choice = Choice
+type Choice =
   { condition ∷ Condition
   , prompt ∷ String
   , consq ∷ StoryEvent 

@@ -2,18 +2,15 @@ module Script.Keywords where
 
 import Common.Annex ((|>))
 import Common.Time (Time)
-import Data.Enum (class BoundedEnum, toEnum)
 import Data.List
-import Data.Maybe (fromJust)
 import Data.Tuple (Tuple(..))
 import Game.Types.ActionName (Name(..))
 import Game.Types.Condition (Condition(..), PureCondition(..))
 import Game.Types.Effect (Effect(..))
-import Game.Types.Story (Story(..))
-import Game.Types.StoryEvent (AtomicEvent(..), Choice(..), ConditionedEvent(..), StoryEvent(..))
+import Game.Types.Story (Story)
+import Game.Types.StoryEvent (AtomicEvent(..), Choice, ConditionedEvent(..), StoryEvent(..))
 import Game.Types.TopLevelEvent (body, reoccurring, trigger)
 import Game.Types.TopLevelEvent as TopLevelEvent
-import Partial.Unsafe (unsafePartial)
 import Prelude (Unit, identity, unit, (>>>), ($))
 import Script.Buildable (class Buildable)
 import Script.Builder (Builder(..), getConstruct)
@@ -56,7 +53,7 @@ makeTopLevel n r c e =
                |> (trigger c)
                |> (body e)
   in
-    build (Story [tl])
+    build (singleton tl)
 
 top ∷ Boolean → Condition → StoryEvent → StoryBuilder
 top = makeTopLevel ""
@@ -91,10 +88,10 @@ choices ∷ List Choice → EventBuilder
 choices c = build (PlayerChoice c)
 
 prompt ∷ String → StoryEvent → ListBuilder Choice
-prompt s e = build $ singleton $ Choice { prompt: s, consq: e, condition: unconditionally }
+prompt s e = build $ singleton $ { prompt: s, consq: e, condition: unconditionally }
 
 promptIf ∷ Condition → String → StoryEvent → ListBuilder Choice
-promptIf c s e = build $ singleton $ Choice { prompt: s, consq: e, condition: c }
+promptIf c s e = build $ singleton $ { prompt: s, consq: e, condition: c }
 
 cases ∷ List ConditionedEvent → EventBuilder 
 cases es = build $ (Cases es)

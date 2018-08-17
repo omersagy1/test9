@@ -1,9 +1,8 @@
 module Script.Buildable where
 
-import Prelude ((<>), mempty, append)
+import Prelude (append, (<>))
 import Data.List (List(..), snoc, (:))
 
-import Game.Types.Story (Story)
 import Game.Types.StoryEvent (StoryEvent(..))
 
 
@@ -13,11 +12,6 @@ class Buildable a where
   combine ∷ a → a → a
   -- Like mempty.
   default ∷ a
-
-
-instance buildableStory ∷ Buildable Story where
-  combine = (<>)
-  default = mempty
 
 
 instance buildableStoryEvent ∷ Buildable StoryEvent where
