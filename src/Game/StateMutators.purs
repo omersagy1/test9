@@ -12,7 +12,6 @@ import Game.Types.Action (Action)
 import Game.Types.Action as Action
 import Game.Types.ActionName as ActionName
 import Game.Types.ActionSet as ActionSet
-import Game.Types.Activatable (class Activatable)
 import Game.Types.Activatable as Activatable
 import Game.Types.Effect (Effect)
 import Game.Types.Effect as Effect
@@ -28,7 +27,7 @@ update ∷ Time → GameState → GameState
 update t s = 
   s { gameTime = s.gameTime + t }
   |> updateActionCooldowns t
-  |> (\s → s { fire = Fire.update t s.fire })
+  |> (\state → state { fire = Fire.update t state.fire })
 
 
 addItem ∷ Item → GameState → GameState
