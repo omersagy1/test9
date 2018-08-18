@@ -26,8 +26,8 @@ import Prelude ((+), (<>), not, map, (==))
 update ∷ Time → GameState → GameState
 update t s = 
   s { gameTime = s.gameTime + t }
-  |> updateActionCooldowns t
-  |> (\state → state { fire = Fire.update t state.fire })
+  -- |> updateActionCooldowns t
+  -- |> (\state → state { fire = Fire.update t state.fire })
 
 
 addItem ∷ Item → GameState → GameState

@@ -4,6 +4,7 @@ import Common.NumCompat (class NumberCompatible, (*))
 import Prelude ((/))
 
 
+-- The unit of time is a millisecond.
 type Time = Number
 
 

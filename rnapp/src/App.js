@@ -38,13 +38,32 @@ export default class App extends Component {
       return PURESCRIPT.getTimePassedSeconds(this.state.model);
   }
 
+  messages = () => {
+    return PURESCRIPT.getMessages(this.state.model);
+  }
+
+  activeMessage = () => {
+    return PURESCRIPT.getActiveMessage(this.state.model);
+  }
+
   render() {
     return (
       <View>
         <Counter count={ Math.round(this.timePassedSeconds()) } />
+        <MessageDisplay messages={this.messages()} 
+                        active={this.activeMessage()} />
       </View>
     );
   }
+}
+
+const MessageDisplay = (props) => {
+  return (
+    <View>
+      <Text> Current Active Message: {props.active} </Text>
+      <Text> Messages: {props.messages} </Text>
+    </View>
+  )
 }
 
 

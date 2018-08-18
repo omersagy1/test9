@@ -1,13 +1,11 @@
 module Game.Types.Model where
 
-import Prelude
 import Data.List (List)
 import Data.Maybe (Maybe)
 
 import Common.Animation (Animation)
 import Common.Time (Time)
 import Common.TimedQueue (TimedQueue)
-import Common.TimedQueue as TimedQueue
 import Game.Types.GameState (GameState)
 import Game.Types.Story (Story)
 import Game.Types.StoryEvent (Choice, StoryEvent)
@@ -21,11 +19,7 @@ type Model =
   -- the state of the machinery.
   { gameState ∷ GameState
 
-  , initialized ∷ Boolean
-  
   , timeLastFrame ∷ Maybe Time
-
-  , gameTimePassed ∷ Number
 
   -- Messages to be displayed on-screen.
   , messageHistory ∷ List String 

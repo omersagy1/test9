@@ -9,18 +9,16 @@ import Game.Types.Fire as Fire
 import Game.Types.GameState (GameState)
 import Game.Types.Milestones as Milestones
 import Game.Types.Model (Model)
-import Script.Scene as Scene
+import Script.SimpleScene as SimpleScene
 
 
 initialModel ∷ Model
 initialModel = 
   { gameState: initialGameState 
-  , initialized: false
   , timeLastFrame: Nothing
-  , gameTimePassed: 0.0
   , messageHistory: Nil
   , eventQueue: TimedQueue.new
-  , story: Scene.story
+  , story: SimpleScene.story
   , paused: false
   , fastForward: false
   , activeChoices: Nil

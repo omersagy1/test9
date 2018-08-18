@@ -1,12 +1,12 @@
 module Game.Update where
 
-import Prelude ((+), (-))
-import Data.Maybe (Maybe(..))
-
 import Common.Annex ((|>))
 import Common.Time (Time)
+import Data.Maybe (Maybe(..))
 import Game.Types.Message (Message(..))
 import Game.Types.Model (Model)
+import Game.UpdateTime as UpdateTime
+import Prelude ((-))
 
 
 update ∷ Message → Model → Model
@@ -17,21 +17,21 @@ update msg model =
 
 
 updateTime ∷ Time → Model → Model
-updateTime t model =
-  updateTimePassed t model
-  |> updateTimeLastFrame t
+updateTime absoluteStamp model =
+  let t = timePassed absoluteStamp model
+  in
+    model
+    |> updateTimeLastFrame absoluteStamp
+    |> UpdateTime.updateGame t
 
 
 updateTimeLastFrame ∷ Time → Model → Model
-updateTimeLastFrame t model =
-  model { timeLastFrame = Just t }
+updateTimeLastFrame stamp model =
+  model { timeLastFrame = Just stamp }
 
 
-updateTimePassed ∷ Time → Model → Model
-updateTimePassed t model =
-  let 
-    tot = case model.timeLastFrame of
-            Nothing → 0.0
-            Just x → model.gameTimePassed + (t - x)
-  in
-    model {gameTimePassed = tot}
+timePassed ∷ Time → Model → Time
+timePassed stamp model =
+  case model.timeLastFrame of
+    Nothing → 0.0
+    Just lastStamp → stamp - lastStamp

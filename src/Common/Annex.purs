@@ -1,9 +1,10 @@
 module Common.Annex where
 
-import Prelude ((#), ($))
-import Data.Maybe (Maybe(..))
 import Data.List (List(..), (:))
+import Data.List as List
+import Data.Maybe (Maybe(..))
 import Data.Tuple (Tuple(..), snd)
+import Prelude ((#), ($))
 
 
 pipeForward ∷ ∀ a b. a → (a → b) → b
@@ -54,3 +55,6 @@ filterMutate filterFn argList struct =
           Tuple (first:restResults) finalStruct
         else
           Tuple restResults finalStruct
+
+listToArray ∷ ∀ a. List a → Array a
+listToArray list = List.toUnfoldable list
