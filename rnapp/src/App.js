@@ -50,8 +50,7 @@ export default class App extends Component {
     return (
       <View>
         <Counter count={ Math.round(this.timePassedSeconds()) } />
-        <MessageDisplay messages={this.messages()} 
-                        active={this.activeMessage()} />
+        <MessageDisplay messages={this.messages()} />
       </View>
     );
   }
@@ -60,8 +59,11 @@ export default class App extends Component {
 const MessageDisplay = (props) => {
   return (
     <View>
-      <Text> Current Active Message: {props.active} </Text>
-      <Text> Messages: {props.messages} </Text>
+      {
+        props.messages.map((message) => {
+          return <Text key={message}> {message} </Text>
+        })
+      } 
     </View>
   )
 }

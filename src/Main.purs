@@ -2,13 +2,13 @@ module Main where
 
 import Data.Maybe
 
-import Common.Annex (listToArray)
+import Common.Annex (listToArray, (|>))
 import Common.Time as Time
 import Game.Init as Init
 import Game.Printer as Printer
-import Game.Update as Update
 import Game.Types.Message (Message(..))
 import Game.Types.Model (Model)
+import Game.Update as Update
 
 -- Interface to be accessed by Javascript.
 -- The only things that the JS should ever
@@ -34,12 +34,4 @@ getTimePassedSeconds ∷ Model → Number
 getTimePassedSeconds model = Time.toSeconds model.gameState.gameTime
 
 getMessages ∷ Model → Array String
-getMessages model = listToArray model.messageHistory
-
-getActiveMessage ∷ Model → String
-getActiveMessage model =
-  case Printer.activeMessage model of
-    Nothing → "NOTHING"
-    Just x → x
-
-
+getMessages model = Printer.allMessages model |> listToArray
