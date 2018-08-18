@@ -20,7 +20,7 @@ condition c s =
     Pure pureCondition → Tuple (pure pureCondition s) s
     And c1 c2 → and c1 c2 s
     Or c1 c2 → or c1 c2 s
-    Not c → notFn c s
+    Not c1 → notFn c1 s
     other → Tuple false s
 
 

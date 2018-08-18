@@ -57,8 +57,8 @@ activeMessage ∷ Model → Maybe String
 activeMessage m =
   case m.activeScrollingMessage of
     Nothing → Nothing
-    Just scrollingMessage →
-      Just (currentText scrollingMessage)
+    Just msg →
+      Just (currentText msg)
 
 
 scrollingMessage ∷ String → ScrollingMessage

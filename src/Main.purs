@@ -1,7 +1,5 @@
 module Main where
 
-import Data.Maybe
-
 import Common.Annex (listToArray, (|>))
 import Common.Time as Time
 import Game.Init as Init

@@ -172,10 +172,10 @@ playAtomicEvent e model =
          |> map (\x → x.event))
     
     StartInteraction →
-      (\model → model { interactionMode = true })
+      (\m → m { interactionMode = true })
 
     EndInteraction →
-      (\model → model { interactionMode = false })
+      (\m → m { interactionMode = false })
 
 
 playSequencedEvent ∷ List StoryEvent → Model → Model
