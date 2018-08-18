@@ -61,7 +61,7 @@ const MessageDisplay = (props) => {
     <View>
       {
         props.messages.map((message) => {
-          return <Text key={message}> {message} </Text>
+          return <Text> {message} </Text>
         })
       } 
     </View>
@@ -77,13 +77,5 @@ const styles = StyleSheet.create({
     paddingTop: 100,
     alignItems: 'center'
   },
-
-  toggledBackground: {
-    backgroundColor: "green"
-  },
-
-  toggle: {
-    marginTop: 50
-  }
 
 });

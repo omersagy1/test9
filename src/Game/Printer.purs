@@ -48,7 +48,6 @@ allMessages ∷ Model → List String
 allMessages m = (maybeToList (activeMessage m)) <> (messageHistory m)
 
 
--- All messages already fully printed.
 messageHistory ∷ Model → List String
 messageHistory m = m.messageHistory
 

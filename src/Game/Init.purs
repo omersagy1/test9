@@ -9,7 +9,7 @@ import Game.Types.Fire as Fire
 import Game.Types.GameState (GameState)
 import Game.Types.Milestones as Milestones
 import Game.Types.Model (Model)
-import Script.SimpleScene as SimpleScene
+import Script.Scene as Scene
 
 
 initialModel ∷ Model
@@ -18,7 +18,7 @@ initialModel =
   , timeLastFrame: Nothing
   , messageHistory: Nil
   , eventQueue: TimedQueue.new
-  , story: SimpleScene.story
+  , story: Scene.story
   , paused: false
   , fastForward: false
   , activeChoices: Nil
