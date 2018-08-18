@@ -57,13 +57,13 @@ export default class App extends Component {
 }
 
 const MessageDisplay = (props) => {
+  const messages = props.messages.map((message, index) => {
+    return <Text key={index}> {message} </Text>
+  })
+
   return (
     <View>
-      {
-        props.messages.map((message) => {
-          return <Text> {message} </Text>
-        })
-      } 
+      {messages} 
     </View>
   )
 }
