@@ -1,16 +1,17 @@
 module Game.ModelHelpers where
 
-import Prelude (not, (==), (||))
-import Data.List (List(..))
-import Data.List as List
+import Data.Maybe
 
 import Common.TimedQueue as TimedQueue
+import Data.List (List(..))
+import Data.List as List
 import Game.Init as Init
 import Game.StateMutators as StateMutators
 import Game.Types.Effect (Effect)
 import Game.Types.GameState (GameState)
 import Game.Types.Model (Model)
 import Game.Types.StoryEvent (Choice)
+import Prelude (not, (==), (||))
 
 
 storyPaused ∷ Model → Boolean
@@ -77,9 +78,21 @@ setGameState ∷ GameState → Model → Model
 setGameState s m = m { gameState = s }
 
 
+hasActiveChoices ∷ Model → Boolean
+hasActiveChoices m =
+  not (List.null m.activeChoices)
+
+
 clearActiveChoices ∷ Model → Model
 clearActiveChoices m =
   m { activeChoices = Nil }
+
+
+getActiveChoiceWithPrompt ∷ String → Model → Maybe Choice
+getActiveChoiceWithPrompt prompt model =
+  case model.activeChoices of
+    Nil → Nothing
+    choices → List.find (\c → c.prompt == prompt) choices
 
 
 eventQueueEmpty ∷ Model → Boolean

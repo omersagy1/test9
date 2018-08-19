@@ -3,6 +3,7 @@ module Game.Update where
 import Common.Annex ((|>))
 import Common.Time (Time)
 import Data.Maybe (Maybe(..))
+import Game.ModelHelpers as ModelHelpers
 import Game.Types.Message (Message(..))
 import Game.Types.Model (Model)
 import Game.UpdateTime as UpdateTime
@@ -12,7 +13,14 @@ import Prelude ((-))
 update ∷ Message → Model → Model
 update msg model =
   case msg of
+
     UpdateTime timestamp → updateTime timestamp model
+
+    MakeChoice prompt → 
+      if ModelHelpers.hardPaused model then model
+      else
+        makeChoice prompt model
+
     other → model
 
 
@@ -35,3 +43,15 @@ timePassed stamp model =
   case model.timeLastFrame of
     Nothing → 0.0
     Just lastStamp → stamp - lastStamp
+
+
+makeChoice ∷ String → Model → Model
+makeChoice prompt model =
+  let
+    choice = ModelHelpers.getActiveChoiceWithPrompt prompt model
+  in
+    case choice of
+      Nothing → model
+      Just c →
+        ModelHelpers.clearActiveChoices model
+        |> UpdateTime.pushStoryEventWithDelay c.consq 0.0
