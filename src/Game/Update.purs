@@ -14,6 +14,12 @@ update ∷ Message → Model → Model
 update msg model =
   case msg of
 
+    TogglePause → ModelHelpers.togglePause model
+
+    ToggleFastForward → ModelHelpers.toggleFastForward model
+
+    Restart → ModelHelpers.restart model.paused
+
     UpdateTime timestamp → 
       if ModelHelpers.storyPaused model then model
       else 

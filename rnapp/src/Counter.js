@@ -18,8 +18,8 @@ export const Counter = (props) => {
 const styles = StyleSheet.create({
 
   widget: {
-    height: 300,
-    alignSelf: 'stretch',
+    height: 100,
+    //alignSelf: 'stretch',
     backgroundColor: "lightgreen",
     borderWidth: 2,
     borderColor: 'blue'

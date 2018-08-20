@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Alert, TouchableHighlight, Button, StyleSheet, Text, View } from 'react-native';
 
 import { PURESCRIPT } from './Purs';
+import { DebugBar } from './DebugDisplay';
 import { Counter } from './Counter';
 import { ToggleButton } from './ToggleButton';
 
@@ -30,6 +31,18 @@ export default class App extends Component {
     requestAnimationFrame(this.loop);
   }
 
+  togglePause = () => {
+    this.processMessage(PURESCRIPT.togglePauseMessage);
+  }
+
+  restart = () => {
+    this.processMessage(PURESCRIPT.restartMessage);
+  }
+
+  toggleFastForward = () => {
+    this.processMessage(PURESCRIPT.toggleFastForwardMessage);
+  }
+
   updateTime = (t) => {
     this.processMessage(PURESCRIPT.updateTimeMessage(t));
   }
@@ -38,6 +51,14 @@ export default class App extends Component {
     return (() => {
       return this.processMessage(PURESCRIPT.makeChoiceMessage(prompt));
     });
+  }
+
+  isPaused = () => {
+    return PURESCRIPT.isPaused(this.state.model);
+  }
+
+  inFastForwardState = () => {
+    return PURESCRIPT.inFastForwardState(this.state.model);
   }
 
   timePassedSeconds = () => {
@@ -58,13 +79,24 @@ export default class App extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.app}>
+
+        <DebugBar style={styles.debugBar} 
+                  isPaused={this.isPaused()}
+                  inFastForwardState={this.inFastForwardState()}
+                  pauseCallback={this.togglePause}
+                  restartCallback={this.restart}
+                  fastForwardCallback={this.toggleFastForward} />
+
         <Counter count={ Math.round(this.timePassedSeconds()) } />
+
         <MessageDisplay messages={ this.messages() } />
+
         { this.hasActiveChoices() && 
           <Choices labels={ this.getChoiceButtonLabels() } 
-                   callbackMaker={ this.makeChoice }/> 
+                   callbackMaker={ this.makeChoice } /> 
         }
+
       </View>
     );
   }
@@ -111,8 +143,11 @@ const styles = StyleSheet.create({
   app: {
     flex: 1,
     backgroundColor: "orange",
-    paddingTop: 100,
-    alignItems: 'center'
+    alignItems: 'center',
+    paddingTop: 50,
+  },
+
+  debugBar: {
   },
 
   choiceButton: {
