@@ -6,7 +6,6 @@ import { DebugBar } from './DebugDisplay';
 import { MessageDisplay } from './MessageDisplay';
 import { Choices } from './Choices';
 import { Counter } from './Counter';
-import { ToggleButton } from './ToggleButton';
 
 
 export default class App extends Component {
