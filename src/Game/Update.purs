@@ -14,7 +14,10 @@ update ∷ Message → Model → Model
 update msg model =
   case msg of
 
-    UpdateTime timestamp → updateTime timestamp model
+    UpdateTime timestamp → 
+      if ModelHelpers.storyPaused model then model
+      else 
+        updateTime timestamp model
 
     MakeChoice prompt → 
       if ModelHelpers.hardPaused model then model
