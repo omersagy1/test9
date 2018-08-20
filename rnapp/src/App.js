@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Alert, Button, StyleSheet, Text, View } from 'react-native';
+import { Alert, TouchableHighlight, Button, StyleSheet, Text, View } from 'react-native';
 
 import { PURESCRIPT } from './Purs';
 import { Counter } from './Counter';
@@ -34,6 +34,12 @@ export default class App extends Component {
     this.processMessage(PURESCRIPT.updateTimeMessage(t));
   }
 
+  makeChoice = (prompt) => {
+    return (() => {
+      return this.processMessage(PURESCRIPT.makeChoiceMessage(prompt));
+    });
+  }
+
   timePassedSeconds = () => {
       return PURESCRIPT.getTimePassedSeconds(this.state.model);
   }
@@ -42,15 +48,23 @@ export default class App extends Component {
     return PURESCRIPT.getMessages(this.state.model);
   }
 
-  activeMessage = () => {
-    return PURESCRIPT.getActiveMessage(this.state.model);
+  hasActiveChoices = () => {
+    return PURESCRIPT.hasActiveChoices(this.state.model);
+  }
+
+  getChoiceButtonLabels = () => {
+    return PURESCRIPT.getChoiceButtonLabels(this.state.model);
   }
 
   render() {
     return (
       <View>
         <Counter count={ Math.round(this.timePassedSeconds()) } />
-        <MessageDisplay messages={this.messages()} />
+        <MessageDisplay messages={ this.messages() } />
+        { this.hasActiveChoices() && 
+          <Choices labels={ this.getChoiceButtonLabels() } 
+                   callbackMaker={ this.makeChoice }/> 
+        }
       </View>
     );
   }
@@ -68,6 +82,29 @@ const MessageDisplay = (props) => {
   )
 }
 
+const Choices = (props) => {
+  const choiceButtons = props.labels.map((label, index) => {
+    return <ChoiceButton label={label} 
+                         key={index} 
+                         callback={props.callbackMaker(label)} />;
+  })
+  return (
+    <View>
+      {choiceButtons}
+    </View>
+  );
+}
+
+const ChoiceButton = (props) => {
+  return (
+    <TouchableHighlight style={styles.choiceButton} 
+                        onPress={props.callback}
+                        underlayColor='purple'>
+      <Text style={styles.label}> {props.label} </Text>
+    </TouchableHighlight>
+  );
+}
+
 
 const styles = StyleSheet.create({
 
@@ -76,6 +113,21 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     paddingTop: 100,
     alignItems: 'center'
+  },
+
+  choiceButton: {
+    height: 100,
+    width: 250,
+    backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderWidth: 5,
+    borderColor: 'black'
+  },
+
+  label: {
+    fontSize: 20,
+    color: 'white',
   },
 
 });

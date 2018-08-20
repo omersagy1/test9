@@ -14,7 +14,7 @@ asString = show story
 
 story ∷ Story
 story = begin do
-  top occursOnceWhen (gameTimePassed (seconds 2)) # do
+  top occursOnceWhen (gameTimePassed (seconds 1.5)) # do
     ln "The room is cold."
     ln "Foul water drips from the ceiling."
     ln "..."
