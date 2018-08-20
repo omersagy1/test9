@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { Alert, TouchableHighlight, Button, StyleSheet, Text, View } from 'react-native';
+import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 
 import { PURESCRIPT } from './Purs';
 import { DebugBar } from './DebugDisplay';
+import { MessageDisplay } from './MessageDisplay';
+import { Choices } from './Choices';
 import { Counter } from './Counter';
 import { ToggleButton } from './ToggleButton';
 
@@ -105,71 +107,14 @@ export default class App extends Component {
   }
 }
 
-const MessageDisplay = (props) => {
-  const messages = props.messages.map((message, index) => {
-    return <Text key={index}> {message} </Text>
-  })
-
-  return (
-    <View style={styles.messages}>
-      {messages} 
-    </View>
-  )
-}
-
-const Choices = (props) => {
-  const choiceButtons = props.labels.map((label, index) => {
-    return <ChoiceButton label={label} 
-                         key={index} 
-                         callback={props.callbackMaker(label)} />;
-  })
-  return (
-    <View>
-      {choiceButtons}
-    </View>
-  );
-}
-
-const ChoiceButton = (props) => {
-  return (
-    <TouchableHighlight style={styles.choiceButton} 
-                        onPress={props.callback}
-                        underlayColor='purple'>
-      <Text style={styles.label}> {props.label} </Text>
-    </TouchableHighlight>
-  );
-}
 
 
 const styles = StyleSheet.create({
 
   app: {
     flex: 1,
-    backgroundColor: "orange",
-    paddingTop: 50,
-  },
-
-  debugBar: {
-  },
-
-  messages : {
-    justifyContent: 'center',
-  },
-
-  choiceButton: {
-    height: 100,
-    width: 250,
-    margin: 10,
-    backgroundColor: 'red',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderWidth: 5,
-    borderColor: 'black'
-  },
-
-  label: {
-    fontSize: 28,
-    color: 'white',
+    backgroundColor: 'black',
+    paddingTop: 25,
   },
 
 });

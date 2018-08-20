@@ -47,16 +47,16 @@ const TOGGLE_COLOR = 'purple';
 const styles = StyleSheet.create({
 
   bar: {
-    height: 60,
-    flex: 1,
+    height: 80,
     flexDirection: 'row',
-    backgroundColor: 'orange',
-    justifyContent: 'center'
+    backgroundColor: 'red',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
 
   button: {
     flex: 1,
-    height: 100,
+    height: 60,
     margin: 5,
     backgroundColor: 'lightblue',
     alignItems: 'center',
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: 20,
+    fontSize: 16,
     color: 'black',
   },
 
