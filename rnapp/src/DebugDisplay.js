@@ -1,6 +1,8 @@
 import React from 'react';
 import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
 
+import { Counter } from './Counter';
+
 
 export const DebugBar = (props) => {
 
@@ -9,19 +11,24 @@ export const DebugBar = (props) => {
   const restartLabel = 'Restart';
 
   return (
-    <View style={styles.bar}>
+    <View style={styles.debug} > 
 
-      <DebugButton label={pauseLabel} 
-                   toggled={props.isPaused}
-                   callback={props.pauseCallback} />
+      <View style={styles.bar}>
+        <DebugButton label={pauseLabel} 
+                    toggled={props.isPaused}
+                    callback={props.pauseCallback} />
 
-      <DebugButton label={restartLabel} 
-                   toggled={false}
-                   callback={props.restartCallback} />
+        <DebugButton label={restartLabel} 
+                    toggled={false}
+                    callback={props.restartCallback} />
 
-      <DebugButton label={ffLabel} 
-                   toggled={props.inFastForwardState}
-                   callback={props.fastForwardCallback} />
+        <DebugButton label={ffLabel} 
+                    toggled={props.inFastForwardState}
+                    callback={props.fastForwardCallback} />
+      </View>
+
+      <Counter count={ props.secondsPassed } />
+
     </View>
   );
 }
@@ -46,10 +53,14 @@ const TOGGLE_COLOR = 'purple';
 
 const styles = StyleSheet.create({
 
+  debug: {
+    backgroundColor: 'gray',
+    marginBottom: 20,
+  },
+
   bar: {
     height: 80,
     flexDirection: 'row',
-    backgroundColor: 'red',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -58,11 +69,12 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 60,
     margin: 5,
-    backgroundColor: 'lightblue',
+    backgroundColor: '#5af',
     alignItems: 'center',
     justifyContent: 'center',
-    borderWidth: 5,
+    borderWidth: 3,
     borderColor: 'black',
+    borderRadius: 15,
   },
 
   toggledButton: {
@@ -71,7 +83,11 @@ const styles = StyleSheet.create({
 
   label: {
     fontSize: 16,
-    color: 'black',
+    color: 'white',
+    fontWeight: 'bold',
+    textShadowColor: 'black',
+    textShadowOffset: { width: 0, height: 1},
+    textShadowRadius: 1
   },
 
 });

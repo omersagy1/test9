@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { TouchableHighlight, StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'react-native';
 
 import { PURESCRIPT } from './Purs';
 import { DebugBar } from './DebugDisplay';
 import { MessageDisplay } from './MessageDisplay';
 import { Choices } from './Choices';
-import { Counter } from './Counter';
 
 
 export default class App extends Component {
@@ -85,14 +85,14 @@ export default class App extends Component {
     return (
       <View style={styles.app}>
 
-        <DebugBar style={styles.debugBar} 
-                  isPaused={this.isPaused()}
+        <StatusBar hidden />
+
+        <DebugBar isPaused={this.isPaused()}
                   inFastForwardState={this.inFastForwardState()}
                   pauseCallback={this.togglePause}
                   restartCallback={this.restart}
-                  fastForwardCallback={this.toggleFastForward} />
-
-        <Counter count={ Math.round(this.timePassedSeconds()) } />
+                  fastForwardCallback={this.toggleFastForward} 
+                  secondsPassed={Math.round(this.timePassedSeconds()) } />
 
         <MessageDisplay messages={ this.messages() } />
 
@@ -113,7 +113,6 @@ const styles = StyleSheet.create({
   app: {
     flex: 1,
     backgroundColor: 'black',
-    paddingTop: 25,
   },
 
 });

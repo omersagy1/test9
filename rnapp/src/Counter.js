@@ -13,17 +13,14 @@ export const Counter = (props) => {
 const styles = StyleSheet.create({
 
   numberDisplay: {
-    backgroundColor: "lightblue",
-    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
+    paddingBottom: 5,
   },
 
   counterText: {
     fontSize: 20,
-    color: 'purple',
+    color: 'white',
   },
 
 });
