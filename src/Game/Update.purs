@@ -21,9 +21,8 @@ update msg model =
     Restart → ModelHelpers.restart model.paused
 
     UpdateTime timestamp → 
-      if ModelHelpers.storyPaused model then model
-      else 
-        updateTime timestamp model
+      updateTime timestamp model
+      |> updateTimeLastFrame timestamp
 
     MakeChoice prompt → 
       if ModelHelpers.hardPaused model then model
@@ -35,11 +34,9 @@ update msg model =
 
 updateTime ∷ Time → Model → Model
 updateTime absoluteStamp model =
-  let t = timePassed absoluteStamp model
-  in
-    model
-    |> updateTimeLastFrame absoluteStamp
-    |> UpdateTime.updateGame t
+  if ModelHelpers.storyPaused model then model
+  else
+    UpdateTime.updateGame (timePassed absoluteStamp model) model
 
 
 updateTimeLastFrame ∷ Time → Model → Model

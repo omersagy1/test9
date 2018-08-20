@@ -6,11 +6,12 @@ export const DebugBar = (props) => {
 
   const pauseLabel = props.isPaused ? 'Resume' : 'Pause';
   const ffLabel = props.inFastForwardState ? 'Restore Speed' : 'Fast Forward';
+  const restartLabel = 'Restart';
 
   return (
     <View style={styles.bar}>
       <DebugButton label={pauseLabel} callback={props.pauseCallback} />
-      <DebugButton label='Restart' callback={props.restartCallback} />
+      <DebugButton label={restartLabel} callback={props.restartCallback} />
       <DebugButton label={ffLabel} callback={props.fastForwardCallback} />
     </View>
   );
