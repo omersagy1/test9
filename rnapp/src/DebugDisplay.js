@@ -10,48 +10,68 @@ export const DebugBar = (props) => {
 
   return (
     <View style={styles.bar}>
-      <DebugButton label={pauseLabel} callback={props.pauseCallback} />
-      <DebugButton label={restartLabel} callback={props.restartCallback} />
-      <DebugButton label={ffLabel} callback={props.fastForwardCallback} />
+
+      <DebugButton label={pauseLabel} 
+                   toggled={props.isPaused}
+                   callback={props.pauseCallback} />
+
+      <DebugButton label={restartLabel} 
+                   toggled={false}
+                   callback={props.restartCallback} />
+
+      <DebugButton label={ffLabel} 
+                   toggled={props.inFastForwardState}
+                   callback={props.fastForwardCallback} />
     </View>
   );
 }
 
 
 const DebugButton = (props) => {
+  const style = [styles.button];
+  if (props.toggled) {
+    style.push(styles.toggledButton);
+  }
   return (
-    <TouchableHighlight style={styles.button} 
+    <TouchableHighlight style={style} 
                         onPress={props.callback}
-                        underlayColor='purple'>
+                        underlayColor={TOGGLE_COLOR}>
       <Text style={styles.label}> {props.label} </Text>
     </TouchableHighlight>
   );
 }
 
 
+const TOGGLE_COLOR = 'purple';
+
 const styles = StyleSheet.create({
 
   bar: {
-    height: 100,
+    height: 60,
     flex: 1,
     flexDirection: 'row',
-    backgroundColor: "orange",
-    alignItems: 'center'
+    backgroundColor: 'orange',
+    justifyContent: 'center'
   },
 
   button: {
     flex: 1,
     height: 100,
+    margin: 5,
     backgroundColor: 'lightblue',
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 5,
-    borderColor: 'black'
+    borderColor: 'black',
+  },
+
+  toggledButton: {
+    backgroundColor: TOGGLE_COLOR,
   },
 
   label: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
   },
 
 });

@@ -12,6 +12,9 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      // NOTE: all state for the entire app must go
+      // into this model. Do not add any more variables
+      // to the state object.
       model: PURESCRIPT.initialModel
     }
     requestAnimationFrame(this.loop);
@@ -108,7 +111,7 @@ const MessageDisplay = (props) => {
   })
 
   return (
-    <View>
+    <View style={styles.messages}>
       {messages} 
     </View>
   )
@@ -143,16 +146,20 @@ const styles = StyleSheet.create({
   app: {
     flex: 1,
     backgroundColor: "orange",
-    alignItems: 'center',
     paddingTop: 50,
   },
 
   debugBar: {
   },
 
+  messages : {
+    justifyContent: 'center',
+  },
+
   choiceButton: {
     height: 100,
     width: 250,
+    margin: 10,
     backgroundColor: 'red',
     alignItems: 'center',
     justifyContent: 'center',
@@ -161,7 +168,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: 20,
+    fontSize: 28,
     color: 'white',
   },
 

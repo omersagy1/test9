@@ -47,6 +47,7 @@ makeChoiceMessage prompt = MakeChoice prompt
 
 -- USE THE FOLLOWING TO GET CURRENT MODEL STATE --
 
+
 isPaused ∷ Model → Boolean
 isPaused model = model.paused
 

@@ -3,13 +3,8 @@ import { Alert, Button, StyleSheet, Text, View } from 'react-native';
 
 export const Counter = (props) => {
   return (
-
-    <View style={styles.widget}>
-
-      <View style={styles.numberDisplay}>
-        <Text style={styles.counterText}> Seconds Passed: {props.count} </Text>
-      </View>
-
+    <View style={styles.numberDisplay}>
+      <Text style={styles.counterText}> Seconds Passed: {props.count} </Text>
     </View>
   )
 }
@@ -17,33 +12,18 @@ export const Counter = (props) => {
 
 const styles = StyleSheet.create({
 
-  widget: {
-    height: 100,
-    //alignSelf: 'stretch',
-    backgroundColor: "lightgreen",
-    borderWidth: 2,
-    borderColor: 'blue'
-  },
-
   numberDisplay: {
     backgroundColor: "lightblue",
     height: 40,
-    flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    borderColor: 'black',
+    borderWidth: 1,
   },
 
   counterText: {
     fontSize: 20,
     color: 'purple',
   },
-
-  buttonSection: {
-    backgroundColor: "lightyellow",
-    flex: 2,
-    justifyContent: 'center',
-    alignItems: 'center'
-  }
-
 
 });
