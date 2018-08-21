@@ -15,16 +15,16 @@ export const DebugBar = (props) => {
 
       <View style={styles.bar}>
         <DebugButton label={pauseLabel} 
-                    toggled={props.isPaused}
-                    callback={props.pauseCallback} />
+                     toggled={props.isPaused}
+                     callback={props.pauseCallback} />
 
         <DebugButton label={restartLabel} 
-                    toggled={false}
-                    callback={props.restartCallback} />
+                     toggled={false}
+                     callback={props.restartCallback} />
 
         <DebugButton label={ffLabel} 
-                    toggled={props.inFastForwardState}
-                    callback={props.fastForwardCallback} />
+                     toggled={props.inFastForwardState}
+                     callback={props.fastForwardCallback} />
       </View>
 
       <Counter count={ props.secondsPassed } />

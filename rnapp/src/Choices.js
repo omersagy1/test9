@@ -29,9 +29,9 @@ const ChoiceButton = (props) => {
 const styles = StyleSheet.create({
 
   choices: {
-    backgroundColor: 'darkgray',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    flexGrow: 1,
   },
 
   choiceButton: {
@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderWidth: 3,
     borderColor: 'yellow',
+    borderRadius: 20,
   },
 
   label: {
